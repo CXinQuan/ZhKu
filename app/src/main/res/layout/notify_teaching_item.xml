@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.xyb.zhku.ui.TestActivity">
+
+    <TextView
+        android:id="@+id/tv_notify_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:text="2018-9-29 18:02"
+        android:textColor="#55666666" />
+
+    <TextView
+        android:id="@+id/tv_notify_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_notify_time"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:drawableLeft="@mipmap/star"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="关于我校第六届教学名师评选及第九届广东省高等学校教学名师推荐工作" />
+
+    <TextView
+        android:id="@+id/tv_notify_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_notify_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:singleLine="true"
+        android:text="各位老师：我校第六届教学名师评选及第九届广东省高等学校教学名师推荐工作截止时间是9 月 28 日（即明天），请需要申请的老师尽快把材料交给我。"
+        android:textColor="#55666666" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/tv_notify_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#55999999" />
+</RelativeLayout>

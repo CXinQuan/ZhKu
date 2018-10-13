@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#24b6e9">
+
+        <ImageView
+            android:id="@+id/head_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/back" />
+        <TextView
+            android:id="@+id/head_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="新用户注册"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#f0f0f0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/phone_verification" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="身份"
+                    android:textSize="18sp" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_reg_student"
+                        style="@style/Reg_RadioButton"
+                        android:checked="true"
+                        android:text="学生" />
+
+                    <RadioButton
+                        android:id="@+id/rb_reg_teacher"
+                        style="@style/Reg_RadioButton"
+                        android:text="老师" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout style="@style/Reg_LinearLayout">
+
+                <TextView
+                    android:id="@+id/tv_reg_school_number"
+                    style="@style/Reg_TextView"
+                    android:text="学号" />
+
+                <EditText
+                    android:id="@+id/et_reg_school_number"
+                    style="@style/Reg_AutoCompleteTextView"
+                    android:hint="请输入学号" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/Reg_LinearLayout">
+
+                <TextView
+                    style="@style/Reg_TextView"
+                    android:text="姓名" />
+
+                <EditText
+                    android:id="@+id/et_reg_name"
+                    style="@style/Reg_AutoCompleteTextView"
+                    android:hint="请输入姓名 如 张三" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_reg_enrollment_year"
+                style="@style/Reg_LinearLayout">
+
+                <TextView
+                    style="@style/Reg_TextView"
+                    android:text="入学年份" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/act_reg_enrollment_year"
+                    style="@style/Reg_AutoCompleteTextView"
+                    android:hint="请输入年级 如 2015" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/Reg_LinearLayout">
+
+                <TextView
+                    style="@style/Reg_TextView"
+                    android:text="学院" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/act_reg_college"
+                    style="@style/Reg_AutoCompleteTextView"
+                    android:hint="请输入学院 如 信息科学与技术学院" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_reg_major"
+                style="@style/Reg_LinearLayout">
+
+                <TextView
+                    style="@style/Reg_TextView"
+                    android:text="专业" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/act_reg_major"
+                    style="@style/Reg_AutoCompleteTextView"
+                    android:hint="请输入专业 如 电子信息工程" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_reg_class"
+                style="@style/Reg_LinearLayout"
+                android:layout_marginBottom="100dp">
+
+                <TextView
+                    style="@style/Reg_TextView"
+                    android:text="班级" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/act_reg_class"
+                    style="@style/Reg_AutoCompleteTextView"
+                    android:hint="请输入班级 如 电子信息工程151" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_regiest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="150dp"
+                android:background="@drawable/login_btn_bg"
+                android:text="注册"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+    </ScrollView><!--</LinearLayout>-->
+</LinearLayout>

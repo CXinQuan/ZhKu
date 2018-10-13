@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+  >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@mipmap/head_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/head_1" />
+
+        <TextView
+            android:id="@+id/tv_my_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="说不出来的忧伤"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <RelativeLayout style="@style/MyRelativeLayout">
+
+        <TextView
+            style="@style/TextView_My_Left"
+            android:drawableLeft="@mipmap/phone"
+            android:text="手机" />
+
+        <TextView
+            android:id="@+id/tv_my_phone"
+            style="@style/TextView_My_Right"
+            android:text="13533****9284" />
+    </RelativeLayout>
+
+    <View style="@style/View_my" />
+
+
+    <RelativeLayout style="@style/MyRelativeLayout">
+
+        <TextView
+            style="@style/TextView_My_Left"
+            android:drawableLeft="@mipmap/number"
+            android:text="工号" />
+
+        <TextView
+            android:id="@+id/tv_my_school_number"
+            style="@style/TextView_My_Right"
+            android:text="201510214103" />
+    </RelativeLayout>
+
+    <View style="@style/View_my" />
+
+    <RelativeLayout style="@style/MyRelativeLayout">
+
+        <TextView
+            style="@style/TextView_My_Left"
+            android:drawableLeft="@mipmap/college"
+            android:text="学院" />
+
+        <TextView
+            android:id="@+id/tv_my_colleg"
+            style="@style/TextView_My_Right"
+            android:text="信息科学与技术学院" />
+    </RelativeLayout>
+
+    <View style="@style/View_my" />
+</merge>

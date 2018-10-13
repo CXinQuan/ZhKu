@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/smartrefreshlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="8dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="总体表现"
+                        android:textSize="20sp"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:layout_marginTop="5dp"
+                        android:background="#55999999"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout style="@style/HomeworkDetailConpletionLinearLayout">
+
+                            <TextView
+                                style="@style/Width_Height_wrap_content"
+                                android:text="已提交人数" />
+
+                            <LinearLayout style="@style/Hor_Wrap_Wrap_LL">
+
+                                <TextView
+                                    android:id="@+id/tv_submit_count"
+                                    style="@style/Tv_ww_textSize"
+                                    android:text="0" />
+
+                                <TextView
+                                    style="@style/Width_Height_wrap_content"
+                                    android:text="人" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View style="@style/Vertical_View" />
+
+                        <LinearLayout style="@style/HomeworkDetailConpletionLinearLayout">
+
+                            <TextView
+                                style="@style/Width_Height_wrap_content"
+                                android:text="最高分" />
+
+                            <LinearLayout style="@style/Hor_Wrap_Wrap_LL">
+
+                                <TextView
+                                    android:id="@+id/tv_max_number"
+                                    style="@style/Tv_ww_textSize"
+                                    android:text="0" />
+
+                                <TextView
+                                    style="@style/Width_Height_wrap_content"
+                                    android:text="分" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View style="@style/Vertical_View" />
+
+                        <LinearLayout style="@style/HomeworkDetailConpletionLinearLayout">
+
+                            <TextView
+                                style="@style/Width_Height_wrap_content"
+                                android:text="已批改人数" />
+
+                            <LinearLayout style="@style/Hor_Wrap_Wrap_LL">
+
+                                <TextView
+                                    android:id="@+id/tv_has_correct"
+                                    style="@style/Tv_ww_textSize"
+                                    android:text="0" />
+
+                                <TextView
+                                    style="@style/Width_Height_wrap_content"
+                                    android:text="人" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View style="@style/Vertical_View" />
+
+                        <LinearLayout style="@style/HomeworkDetailConpletionLinearLayout">
+
+                            <TextView
+                                style="@style/Width_Height_wrap_content"
+                                android:text="未批改人数" />
+
+                            <LinearLayout style="@style/Hor_Wrap_Wrap_LL">
+
+                                <TextView
+                                    android:id="@+id/tv_not_correct"
+                                    style="@style/Tv_ww_textSize"
+                                    android:text="0" />
+
+                                <TextView
+                                    style="@style/Width_Height_wrap_content"
+                                    android:text="人" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_school_number"
+                    style="@style/TextView_ww_weight_gravity"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:id="@+id/tv_school_number"
+                        style="@style/ww_textsize18"
+                        android:text="学号"
+                        android:textColor="@color/colorPrimary" />
+
+                    <ImageView
+                        android:id="@+id/iv_school_number"
+                        style="@style/Width_Height_wrap_content"
+                        android:src="@mipmap/up_s"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_name"
+                    style="@style/TextView_ww_weight_gravity">
+
+                    <TextView
+                        style="@style/ww_textsize18"
+                        android:text="姓名" />
+                </LinearLayout>
+
+                <!--<LinearLayout-->
+                <!--android:id="@+id/ll_class"-->
+                <!--style="@style/TextView_ww_weight_gravity">-->
+
+                <!--<TextView-->
+                <!--style="@style/ww_textsize18"-->
+                <!--android:text="班级" />-->
+                <!--<ImageView-->
+                <!--style="@style/Width_Height_wrap_content"-->
+                <!--android:src="@mipmap/down_s" />-->
+                <!--</LinearLayout>-->
+
+                <LinearLayout
+                    android:id="@+id/ll_state"
+                    style="@style/TextView_ww_weight_gravity">
+
+                    <TextView
+                        android:id="@+id/tv_state"
+                        style="@style/ww_textsize18"
+                        android:text="状态" />
+
+                    <ImageView
+                        android:id="@+id/iv_state"
+                        style="@style/Width_Height_wrap_content"
+                        android:src="@mipmap/down_s"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_grade"
+                    style="@style/TextView_ww_weight_gravity">
+
+                    <TextView
+                        android:id="@+id/tv_grade"
+                        style="@style/ww_textsize18"
+                        android:text="成绩" />
+
+                    <ImageView
+                        android:id="@+id/iv_grade"
+                        style="@style/Width_Height_wrap_content"
+                        android:src="@mipmap/down_s"
+                        android:visibility="invisible" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:cardCornerRadius="6dp"-->
+        <!--app:cardElevation="8dp"-->
+        <!--app:cardUseCompatPadding="true"-->
+        <!--app:contentPadding="8dp">-->
+        <!--</android.support.v7.widget.CardView>-->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_all_stu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <TextView
+                android:id="@+id/tv_has_not_stu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="90dp"
+                android:text="还没有学生提交作业" />
+        </FrameLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

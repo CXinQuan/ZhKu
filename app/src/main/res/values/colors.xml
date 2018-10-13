@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>-->
+
+    <color name="colorPrimary">#24b6e9</color>
+    <color name="colorPrimaryDark">#3f78f4</color>
+    <color name="colorAccent">#24b6e9</color>
+
+    <color name="btn_n">#ffffff</color>
+    <color name="btn_s">#24b6e9</color>
+
+
+
+    <color name="btn_cancle_selected">#3f84ff</color> <!-- 选中文字颜色 -->
+    <color name="btn_cancle_normal">#24b6e9</color> <!-- 选中文字颜色 -->
+
+</resources>

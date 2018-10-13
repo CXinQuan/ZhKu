@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/fragment_my_base_view" />
+
+
+        <RelativeLayout style="@style/MyRelativeLayout">
+
+            <TextView
+                style="@style/TextView_My_Left"
+                android:drawableLeft="@mipmap/major"
+                android:text="专业" />
+
+            <TextView
+                android:id="@+id/tv_my_major"
+                style="@style/TextView_My_Right"
+                android:text="电子信息工程" />
+        </RelativeLayout>
+
+        <View style="@style/View_my" />
+
+        <RelativeLayout style="@style/MyRelativeLayout">
+
+            <TextView
+                style="@style/TextView_My_Left"
+                android:drawableLeft="@mipmap/class_icon"
+                android:text="班级" />
+
+            <TextView
+                android:id="@+id/tv_my_class"
+                style="@style/TextView_My_Right"
+                android:text="电子信息工程151" />
+        </RelativeLayout>
+
+        <View style="@style/View_my" />
+
+
+        <RelativeLayout style="@style/MyRelativeLayout">
+
+            <TextView
+                style="@style/TextView_My_Left"
+                android:drawableLeft="@mipmap/year"
+                android:text="入学年份" />
+
+            <TextView
+                android:id="@+id/tv_my_enrollment_year"
+                style="@style/TextView_My_Right"
+                android:text="2015" />
+        </RelativeLayout>
+
+        <View style="@style/View_my" />
+
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/btn_logout"
+            android:text="退出登录"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </LinearLayout>
+</ScrollView>
