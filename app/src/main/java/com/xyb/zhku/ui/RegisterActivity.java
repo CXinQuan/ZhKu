@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.bean.User;
+import com.xyb.zhku.utils.MD5Util;
 import com.xyb.zhku.utils.SMSUtil;
 import com.xyb.zhku.utils.SharePreferenceUtils;
 import com.xyb.zhku.utils.UIUtils;
@@ -321,7 +322,7 @@ public class RegisterActivity extends BaseActivity {
                         user.setSchool_number(et_reg_school_number.getText().toString().trim());
                         user.setPhone(et_reg_phone.getText().toString().trim());
                         user.setName(et_reg_name.getText().toString().trim());
-                        user.setPassword(et_reg_passsword.getText().toString().trim());
+                        user.setPassword(MD5Util.encrypt(et_reg_passsword.getText().toString().trim()));
                         user.save(new SaveListener<String>() {
                             @Override
                             public void done(String objectId, BmobException e) {

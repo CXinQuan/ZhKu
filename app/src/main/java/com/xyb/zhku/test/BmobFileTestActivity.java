@@ -1,32 +1,29 @@
 package com.xyb.zhku.test;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
+import com.xyb.zhku.bean.TeachingTask;
 import com.xyb.zhku.utils.FileUtil;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
@@ -36,6 +33,10 @@ import cn.bmob.v3.listener.UploadFileListener;
 public class BmobFileTestActivity extends BaseActivity {
     @BindView(R.id.btn_cumbit)
     Button btn_cumbit;
+    @BindView(R.id.btn_query)
+    Button btn_query;
+    @BindView(R.id.tv_result)
+    TextView tv_result;
 
     public int setContentViewLayout() {
         return R.layout.bmobfile_test;
@@ -48,10 +49,86 @@ public class BmobFileTestActivity extends BaseActivity {
         btn_cumbit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectFile();
+                // selectFile();
+              //  testListInList();
+              //  BmobFile file=new BmobFile();
+
+
             }
         });
     }
+
+    @OnClick({R.id.btn_query})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_query:
+                queryListInList();
+                break;
+        }
+    }
+
+    private void queryListInList() {
+        BmobQuery<TeachingTask> query = new BmobQuery<TeachingTask>();
+        query.findObjects(new FindListener<TeachingTask>() {
+            public void done(List<TeachingTask> object, BmobException e) {
+                if (e == null) {
+                    TeachingTask teachingTask = object.get(0);
+                    List<TeachingTask.SubjectClass> list = teachingTask.getList();
+                    StringBuilder sb = new StringBuilder();
+                    for (TeachingTask.SubjectClass subjectClass : list) {
+                        sb.append(subjectClass.getClassList().get(0));
+                    }
+                    tv_result.setText(sb.toString());
+                } else {
+                    Toast.makeText(mCtx, "加载数据出错！", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+
+  /*  private void testListInList() {
+        TeachingTask task = new TeachingTask();
+        task.setTeacherId("00001");
+        task.setTeacherName("张三");
+        List<TeachingTask.SubjectClass> list = new ArrayList<>();
+
+        TeachingTask.SubjectClass sc1 = new TeachingTask.SubjectClass();
+        List<String> list_class_1 = new ArrayList<>();
+        list_class_1.add("电子151");
+        list_class_1.add("电子152");
+        list_class_1.add("电子153");
+        sc1.setClassList(list_class_1);
+        sc1.setMajor("电子信息工程");
+        sc1.setSubject("数字电路");
+
+        TeachingTask.SubjectClass sc2 = new TeachingTask.SubjectClass();
+        List<String> list_class_2 = new ArrayList<>();
+        list_class_2.add("通信151");
+        list_class_2.add("通信152");
+        list_class_2.add("通信153");
+        sc2.setClassList(list_class_2);
+        sc2.setMajor("通信工程");
+        sc2.setSubject("通信原理");
+        list.add(sc1);
+        list.add(sc2);
+        task.setList(list);
+        task.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    Log("测试", s + "00000000000000000");
+                } else {
+                    e.printStackTrace();
+                    Log("错误代码" + e.getErrorCode(), "  错误");
+
+                }
+
+            }
+        });
+    }*/
+
 
     public void selectFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

@@ -8,8 +8,12 @@ import cn.bmob.v3.BmobObject;
 
 public class User extends BmobObject {
 
-    public static final int STUDENT=0;
-    public static final int TEACHER=1;
+    public static final int STUDENT = 0;
+    public static final int TEACHER = 1;
+    public static final int MANAGER_NOTIFY = 2;
+    public static final int MANAGER_TEACHINGTASK = 3;
+
+
     /**
      * 手机号码
      */

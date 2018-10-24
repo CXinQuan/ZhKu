@@ -5,33 +5,23 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.squareup.picasso.Picasso;
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseFragment;
 import com.xyb.zhku.bean.LunBoTu;
 import com.xyb.zhku.factory.TeacherHomeFragmentFactory;
 import com.xyb.zhku.ui.SearchNotifyActivity;
-import com.xyb.zhku.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +35,6 @@ import cn.bmob.v3.listener.FindListener;
 public class TeacherHomeFragment extends BaseFragment {
     @BindView(R.id.slider)
     SliderLayout sliderLayout;     // viewpager 等价于 SliderLayout
-
 
     @BindView(R.id.tablayout)
     TabLayout tablayout;
@@ -74,15 +63,18 @@ public class TeacherHomeFragment extends BaseFragment {
         tablayout.setupWithViewPager(viewPager);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @OnClick({R.id.linearLayout_search})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.linearLayout_search:
                 Intent intent = new Intent(mCtx, SearchNotifyActivity.class);
-                // startActivity(intent);
+
                 //通过使用共享LinearLayout 实现动画
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "linearLayout").toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "linearLayout").toBundle());
+                } else {
+                    startActivity(intent);
+                }
                 break;
         }
     }
@@ -108,8 +100,8 @@ public class TeacherHomeFragment extends BaseFragment {
 //                    .setScaleType(BaseSliderView.ScaleType.Fit);//ScaleType设置图片展示方式(fitxy  centercrop)
 //            slider.addSlider(textSliderView); //向SliderLayout控件的内部添加条目
 //        }
-       // slider.stopAutoCycle();
-       // slider.startAutoCycle(12000, 12000, true); // 延迟4秒后开始循环，每隔4秒循环一次，用户触摸后不循环
+        // slider.stopAutoCycle();
+        // slider.startAutoCycle(12000, 12000, true); // 延迟4秒后开始循环，每隔4秒循环一次，用户触摸后不循环
         int default_pic_count = 3;
         final List<TextSliderView> sliderViewList = new ArrayList<>();
         for (int i = 0; i < default_pic_count; i++) {

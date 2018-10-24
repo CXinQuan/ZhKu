@@ -3,5 +3,6 @@
   <component name="jp.funnything.offing_harbor.ConvertConfigRepository">
     <option name="format" value="BUTTER_KNIFE" />
     <option name="visibility" value="PACKAGE_PRIVATE" />
+    <option name="useSmartType" value="true" />
   </component>
 </project>

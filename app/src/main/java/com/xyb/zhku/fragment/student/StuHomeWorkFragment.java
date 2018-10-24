@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,21 +18,17 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xyb.zhku.R;
-import com.xyb.zhku.adapter.TeacherHomeworkAdapter;
 import com.xyb.zhku.base.BaseFragment;
 import com.xyb.zhku.bean.TeacherHomeWork;
 import com.xyb.zhku.global.Constants;
-import com.xyb.zhku.manager.ReleaseHomeworkObserverManager;
 import com.xyb.zhku.manager.SubmitHomeworkObserver;
 import com.xyb.zhku.manager.SubmitHomeworkObserverManager;
 import com.xyb.zhku.ui.LoginActivity;
 import com.xyb.zhku.ui.StuSubmitHomeWorkActivity;
-import com.xyb.zhku.ui.TeacherHomeWorkDetailActivity;
 import com.xyb.zhku.utils.SharePreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.BackingStoreException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -154,7 +149,8 @@ public class StuHomeWorkFragment extends BaseFragment implements SubmitHomeworkO
                                 list.addAll(object);
                                 adapter.notifyDataSetChanged();
                             } else {
-                                showToast("没有更多数据...");
+                             //   showToast("没有更多数据...");
+                                smartrefreshlayout.setNoMoreData(true);
                             }
                         } else {
                             showToast("服务器繁忙...");

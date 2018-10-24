@@ -1,10 +1,7 @@
 package com.xyb.zhku.base;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xyb.zhku.R;
 import com.xyb.zhku.bean.TeacherNotify;
@@ -65,7 +60,8 @@ public abstract class BaseNotifyFragment extends BaseFragment {
         // tv_type_text.setText("教学");
         initHeadView(iv_type_icon, tv_type_text);
         initSmartRefreshLayout();
-        pb.setVisibility(View.VISIBLE);
+       // pb.setVisibility(View.VISIBLE); 不能在此显示，只有加载数据的时候才显示，因为重新加载界面不一定重新加载数据，所以就导致不消失
+      // 会 onViewCreated  但不会 onActivityCreated
     }
 
     /**
@@ -107,10 +103,7 @@ public abstract class BaseNotifyFragment extends BaseFragment {
             public void onLoadMore(RefreshLayout refreshLayout) {
                 refreshLayout.finishLoadMore(3000);//延迟3000毫秒后结束刷新
                 getNotifyData(lists.size());
-
             }
-
-
         });
         //smartrefreshlayout.setRefreshFooter(new ClassicsFooter(mCtx));
         //smartrefreshlayout.setRefreshHeader(new BezierCircleHeader(mCtx));
@@ -122,31 +115,30 @@ public abstract class BaseNotifyFragment extends BaseFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         if (isFirst) {
-            // pb.setVisibility(View.VISIBLE);  //不能在这里 因为Fragment 是用 HashMap做缓存的，退出后，重新进来的时候不会重新create
-            //不执行此方法，所以就会出现ProgressBar不消失，所以只能在onStart进行处理消失
+            pb.setVisibility(View.VISIBLE);  //只有加载数据的时候才将Progress打开 因为使用HashMap缓存了Fragment，重新加载界面不一定重新加载数据
             getNotifyData(0);
             isFirst = false;
         }
     }
 
-    @Override
-    public void onStart() {
-        //如果是第一次进入，则无论是否请求到数据，都在3秒后让其消失，如果是后来进来的，则马上让其消失
-//        long time=0;
-//        if (isFirst) {
-//            time=3000;
-//        }else{
-//            time=0;
-//        }
-        new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                pb.setVisibility(View.GONE);
-                return false;
-            }
-        }).sendEmptyMessageDelayed(0, isFirst ? 3000 : 0);//time
-        super.onStart();
-    }
+//    @Override
+//    public void onStart() {
+//        //如果是第一次进入，则无论是否请求到数据，都在3秒后让其消失，如果是后来进来的，则马上让其消失
+////        long time=0;
+////        if (isFirst) {
+////            time=3000;
+////        }else{
+////            time=0;
+////        }
+//        new Handler(new Handler.Callback() {
+//            @Override
+//            public boolean handleMessage(Message msg) {
+//                pb.setVisibility(View.GONE);
+//                return false;
+//            }
+//        }).sendEmptyMessageDelayed(0, isFirst ? 3000 : 0);//time
+//        super.onStart();
+//    }
 
     private void getNotifyData(final int skip) {
         BmobQuery<TeacherNotify> query = new BmobQuery<TeacherNotify>();
@@ -165,7 +157,9 @@ public abstract class BaseNotifyFragment extends BaseFragment {
                                 adapter.notifyDataSetChanged();
                                 pb.setVisibility(View.GONE);
                             } else {
-                                showToast("没有更多数据...");
+                              //  showToast("没有更多数据...");
+                                smartrefreshlayout.setNoMoreData(true);
+
                             }
                         } else {
                             showToast("服务器繁忙！");

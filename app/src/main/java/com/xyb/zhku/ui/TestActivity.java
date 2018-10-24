@@ -68,7 +68,6 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-
     private void getDataFromBmob(final int endSize, final int skip, final String str) {
         BmobQuery<StuNotify> query = new BmobQuery<StuNotify>();
         query.setSkip(skip)

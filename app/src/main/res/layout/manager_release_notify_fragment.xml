@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:checked="true"
+                android:text="学生通知"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/rb_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="教师通知"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rg_stu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_student_teaching"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:checked="true"
+                android:text="教务相关"
+                android:textColor="#9f9f9f"
+                android:textSize="16sp" />
+            <RadioButton
+                android:id="@+id/rb_student_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学生工作"
+                android:layout_marginRight="10dp"
+                android:textColor="#9f9f9f"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rb_student_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其它"
+                android:textColor="#9f9f9f"
+                android:textSize="16sp" />
+        </RadioGroup>
+        <RadioGroup
+            android:id="@+id/rg_teacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_teacher_teaching"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16sp"
+                android:checked="true"
+                android:text="教务"
+                android:textColor="#9f9f9f"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/rb_teacher_science"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="科研"
+                android:textColor="#9f9f9f"
+                android:textSize="16sp" />
+            <RadioButton
+                android:id="@+id/rb_teacher_party"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="党建"
+                android:layout_marginRight="10dp"
+                android:textColor="#9f9f9f"
+                android:textSize="16sp" />
+            <RadioButton
+                android:id="@+id/rb_teacher_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其它"
+                android:textColor="#9f9f9f"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/act_notify_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="通知标题"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textColorHint="#55666666"
+                android:textCursorDrawable="@drawable/my_cursor" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/upload" />
+
+                <TextView
+                    android:id="@+id/tv_nofity_filename"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:text="点击添加附件"
+                    android:textColor="#55666666" />
+
+                <ImageView
+                    android:id="@+id/iv_cancle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/cancle"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <EditText
+            android:id="@+id/act_notify_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@drawable/inputtext"
+            android:elevation="10dp"
+            android:enabled="true"
+            android:gravity="top"
+            android:hint="通知详情"
+            android:maxLines="100"
+            android:minLines="12"
+            android:scrollbars="vertical"
+            android:textColor="#999999"
+            android:textColorHint="#55666666"
+            android:textCursorDrawable="@drawable/my_cursor" />
+        <!--android:layout_margin="20dp"-->
+        <Button
+            android:id="@+id/tv_release"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/btn_submit_selector"
+            android:gravity="center"
+            android:scrollbars="vertical"
+            android:text="发布"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </LinearLayout>
+</ScrollView>

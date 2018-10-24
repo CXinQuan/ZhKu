@@ -219,7 +219,8 @@ public class TeacherHomeWorkFragment extends BaseFragment implements ReleaseHome
                                 list.addAll(object);
                                 adapter.notifyDataSetChanged();
                             } else {
-                                showToast("没有更多数据...");
+                              //  showToast("没有更多数据...");
+                                smartrefreshlayout.setNoMoreData(true);
                             }
                         } else {
                             showToast("服务器繁忙...");  // 如果该老师从来未发布过作业，那么就会触发此代码

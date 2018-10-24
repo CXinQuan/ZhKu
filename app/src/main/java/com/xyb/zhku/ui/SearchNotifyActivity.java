@@ -4,21 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -28,10 +24,8 @@ import android.widget.Toast;
 
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
-import com.xyb.zhku.base.BaseNotifyFragment;
 import com.xyb.zhku.bean.Notify;
 import com.xyb.zhku.bean.StuNotify;
-import com.xyb.zhku.bean.TeacherHomeWork;
 import com.xyb.zhku.bean.TeacherNotify;
 import com.xyb.zhku.bean.User;
 import com.xyb.zhku.global.Constants;
@@ -261,13 +255,17 @@ public class SearchNotifyActivity extends BaseActivity {
         skipBmob = 0;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @OnClick({R.id.tv_search, R.id.tv_proper_order, R.id.tv_reverse_order, R.id.iv_cancle, R.id.iv_head_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_head_back:
                 //  finish();
-                finishAfterTransition();  // 执行完动画才进行  销毁
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { // 执行完动画才进行  销毁
+                    finishAfterTransition();
+                } else {
+                    finish();
+                }
                 break;
             case R.id.tv_proper_order:
                 tv_proper_order.setTextColor(Color.parseColor("#2244ff"));

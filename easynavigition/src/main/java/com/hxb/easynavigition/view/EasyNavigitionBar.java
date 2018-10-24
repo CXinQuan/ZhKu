@@ -1130,7 +1130,6 @@ public class EasyNavigitionBar extends LinearLayout {
         return adapter;
     }
 
-
     public ImageView.ScaleType getScaleType() {
         return scaleType;
     }

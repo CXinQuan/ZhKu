@@ -61,7 +61,7 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
         recyclerview.setAdapter(adapter);
         initHeadView(iv_type_icon, tv_type_text);
         initSmartRefreshLayout();
-        pb.setVisibility(View.VISIBLE);
+       // pb.setVisibility(View.VISIBLE);  不能在此显示，只有加载数据的时候才显示，因为重新加载界面不定重新加载数据，所以就看你导致不消失
     }
 
     /**
@@ -117,8 +117,7 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         if (isFirst) {
-            // pb.setVisibility(View.VISIBLE);  //不能在这里 因为Fragment 是用 HashMap做缓存的，退出后，重新进来的时候不会重新create
-            //不执行此方法，所以就会出现ProgressBar不消失，所以只能在onStart进行处理消失
+            pb.setVisibility(View.VISIBLE);  //只有加载数据的时候才将Progress打开 因为使用HashMap缓存了Fragment，重新加载界面不一定重新加载数据
             getNotifyData(0);
             isFirst = false;
         }
@@ -126,14 +125,14 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
 
     @Override
     public void onStart() {
-
-        new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                pb.setVisibility(View.GONE);
-                return false;
-            }
-        }).sendEmptyMessageDelayed(0, isFirst ? 3000 : 0);//time
+//        Handler handler = new Handler(new Handler.Callback() {
+//            @Override
+//            public boolean handleMessage(Message msg) {
+//                pb.setVisibility(View.GONE);
+//                return false;
+//            }
+//        });
+//        handler.sendEmptyMessageAtTime(0, isFirst ? 3000 : 0);//time
         super.onStart();
     }
 
@@ -154,12 +153,16 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
                                 adapter.notifyDataSetChanged();
                                 pb.setVisibility(View.GONE);
                             } else {
-                                showToast("没有更多数据...");
+                              //  showToast("没有更多数据...");
+                               // pb.setVisibility(View.GONE);
+                                smartrefreshlayout.setNoMoreData(true); // 没有更多数据
+
                             }
                         } else {
                             showToast("服务器繁忙！");
+                           // pb.setVisibility(View.GONE);
                         }
-                        pb.setVisibility(View.GONE);
+                       pb.setVisibility(View.GONE);
                         smartrefreshlayout.finishLoadMore(800);
                     }
                 });
@@ -204,12 +207,16 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
             return new NotifyViewHolder(view);
         }
 
+
         public void onBindViewHolder(NotifyViewHolder holder, int position) {
             StuNotify notify = lists.get(position);
             holder.setPosition(position);
             holder.tv_notify_content.setText(notify.getContent() == null ? "" : notify.getContent());
             holder.tv_notify_time.setText(notify.getCreatedAt());
             holder.tv_notify_title.setText(notify.getTitle());
+//            if(position==lists.size()-1){
+//                pb.setVisibility(View.GONE);
+//            }
         }
 
         @Override

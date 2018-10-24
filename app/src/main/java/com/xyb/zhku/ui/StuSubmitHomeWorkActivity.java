@@ -43,7 +43,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
- *   学生上交作业  并查看该作业成绩
+ * 学生上交作业  并查看该作业成绩
  */
 public class StuSubmitHomeWorkActivity extends BaseActivity {
     @BindView(R.id.iv_head_back)
@@ -109,7 +109,7 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
 
     private void initView() {
         tv_head_content.setText("作业详情");
-
+//btn_submit.setBackgroundColor(Color.parseColor(""));
         if (teacherhomeWork != null) {
             tv_hw_detail_title.setText(teacherhomeWork.getTitle());
             tv_subject.setText("科目：" + teacherhomeWork.getSubject());
@@ -128,7 +128,7 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
                     public void onClick(View v) {
                         // TODO: 2018/9/25     点击附件之后的响应
                         Intent intent = new Intent(mCtx, EnclosureShowActivity.class);
-                     //   intent.putExtra("fileUrl", homeWork.getFile().getUrl());
+                        //   intent.putExtra("fileUrl", homeWork.getFile().getUrl());
                         intent.putExtra("file", teacherhomeWork.getFile());
                         startActivity(intent);
                     }
@@ -138,7 +138,7 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
             }
 
 
-            if (hasSubmit) { // 已经提交作业，那么就像服务器获取成绩
+            if (hasSubmit) { // 已经提交作业，那么就向服务器获取成绩
                 iv_cancle.setVisibility(View.VISIBLE);
                 tv_filename.setTextColor(Color.parseColor("#24b6e9"));
                 //  从服务器上获取成绩,看是否获取得到成绩   等待批改
@@ -154,8 +154,10 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
                 tv_filename.setTextColor(Color.parseColor("#7e7e7e"));
                 iv_cancle.setVisibility(View.GONE);
                 btn_submit.setVisibility(View.VISIBLE);
-                btn_submit.setBackgroundColor(Color.parseColor("#2244ff"));
-                btn_submit.setEnabled(true);
+//                btn_submit.setBackgroundColor(Color.parseColor("#2244ff"));
+//                btn_submit.setEnabled(true);
+                btn_submit.setBackgroundColor(Color.parseColor("#44000000")); //等待重新上传文件
+                btn_submit.setEnabled(false);
             }
         }
     }
@@ -170,7 +172,12 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_submit:
-                // TODO: 2018/10/2   判断是否上传文件，再进行向服务器更新数据
+                // 必须先判断是否已经上传文件，如果没有，下面的代码也没有用了
+                if (stuhomeWork.getFile() == null) {
+                    showToast("请上传文件");
+                    return;
+                }
+                // TODO: 2018/10/2   判断是否正在上传文件，再进行向服务器更新数据
                 if (submitingStuhomeWork) {
                     showToast("正在上传作业，请稍后...");
                     return;
@@ -195,9 +202,7 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
                 submitingStuhomeWork = true;
 
                 if (hasSubmit) {  // TODO: 2018/10/3   已经提交过作业了，那么则直接更新该 StudentHomework即可
-                    if (stuhomeWork.getFile() == null) {
-                        return;
-                    }
+
                     BmobQuery<StudentHomeWork> query = new BmobQuery<StudentHomeWork>();
                     query.addWhereEqualTo("teacher_homework_id", teacherhomeWork.getObjectId());
                     query.addWhereEqualTo("stu_school_number", school_number);
@@ -237,9 +242,8 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
                         }
                     });
 
-
                 } else {  // TODO: 2018/10/3   第一次上交作业
-                    if (hasUpLoad&&stuhomeWork.getFile()!=null) {
+                    if (hasUpLoad && stuhomeWork.getFile() != null) {
                         stuhomeWork.setStu_state(StudentHomeWork.NOT_CHECK);
                         stuhomeWork.setStu_grade(-1);
                         stuhomeWork.setStu_class(uclass);
@@ -427,7 +431,6 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
 
                     //iv_cancle.setVisibility(); 可见
                     // TODO: hasUpLoad=true  tv_filename 显示文件名
-                    // TODO: 更新 上一个界面的数据  添加上学号
                     iv_cancle.setVisibility(View.VISIBLE);
                     hasUpLoad = true;
 

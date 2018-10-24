@@ -35,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -52,13 +53,21 @@
 
             <EditText
                 android:id="@+id/et_user_phone"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="30dp"
                 android:background="@null"
                 android:hint="请输入手机号码"
                 android:textColorHint="#ffffff"
                 android:textColor="#99666666"
                 android:textCursorDrawable="@drawable/my_cursor"/>
+            <ImageView
+                android:id="@+id/iv_cancle_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cancle_white"
+                android:layout_gravity="center_vertical"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +83,8 @@
 
             <EditText
                 android:id="@+id/et_user_password"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
                 android:background="@null"
@@ -83,6 +93,13 @@
                 android:textColor="#99666666"
                 android:textCursorDrawable="@drawable/my_cursor"
                 android:textColorHint="#ffffff" />
+            <ImageView
+                android:id="@+id/iv_cancle_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cancle_white"
+                android:layout_gravity="center_vertical"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -90,6 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/login_btn_bg">
 
             <TextView

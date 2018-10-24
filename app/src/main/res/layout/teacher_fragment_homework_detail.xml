@@ -31,6 +31,7 @@
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="第一次实验报告框架的收纳盒V领感动死了GV看见你说的两个会计师的感觉"
+                    android:textIsSelectable="true"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -49,7 +50,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:text="科目：通信原理" />
+                        android:text="科目：通信原理"
+                        android:textIsSelectable="true" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -69,7 +71,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:text="时间：2018-9-25 22:34" />
+                        android:text="时间：2018-9-25 22:34"
+                        android:textIsSelectable="true" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -103,7 +106,8 @@
                     android:layout_marginLeft="10dp"
                     android:singleLine="true"
                     android:text="附件"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+               />
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
@@ -148,12 +152,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="
-           1、哈哈哈哈哈哈哈哈哈哈或或或或或或
+                    android:text="1、哈哈哈哈哈哈哈哈哈哈或或或或或或
            2、或或或或或或或或或或或或或或或或或或或或或或或
            3、或哈哈哈哈哈哈哈哈哈哈或或或或或或或或或
            4、或或或或或或或或或或或或或或或或或或或或或或或或或"
+                    android:textIsSelectable="true"
                     android:textSize="18sp" />
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

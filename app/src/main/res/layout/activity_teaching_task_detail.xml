@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/head_view" />
+
+    <!--  不提供修改，直接删除   修改等同于 先删除再添加  -->
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="8dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/act_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:enabled="false"
+            android:hint="科目 如：通信原理"
+            android:singleLine="true"
+            android:textColor="#999999"
+            android:textColorHint="#55666666"
+            android:textCursorDrawable="@drawable/my_cursor"
+            android:textSize="13sp" />
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/act_major"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+
+                android:hint="专业 如：电子信息工程"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textColorHint="#55666666"
+                android:textSize="13sp" />
+            <!--android:enabled="false"-->
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/act_enrollment_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+
+                android:hint="年级 如:2015"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textColorHint="#55666666"
+                android:textSize="13sp" />
+            <!--android:enabled="false"-->
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="任课班级"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/cb_all_first"
+            style="@style/MyCheckBox"
+            android:text="全选" />
+
+        <CheckBox
+            android:id="@+id/cb_one"
+            style="@style/MyCheckBox"
+            android:text="1班" />
+
+        <CheckBox
+            android:id="@+id/cb_two"
+            style="@style/MyCheckBox"
+            android:text="2班" />
+
+        <CheckBox
+            android:id="@+id/cb_three"
+            style="@style/MyCheckBox"
+            android:text="3班" />
+
+        <CheckBox
+            android:id="@+id/cb_four"
+            style="@style/MyCheckBox"
+            android:text="4班" />
+
+
+    </LinearLayout>
+    <!--</HorizontalScrollView>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/cb_all_second"
+            style="@style/MyCheckBox"
+            android:text="全选" />
+
+        <CheckBox
+            android:id="@+id/cb_five"
+            style="@style/MyCheckBox"
+            android:text="5班" />
+
+        <CheckBox
+            android:id="@+id/cb_six"
+            style="@style/MyCheckBox"
+            android:text="6班" />
+
+        <CheckBox
+            android:id="@+id/cb_seven"
+            style="@style/MyCheckBox"
+            android:text="7班" />
+
+        <CheckBox
+            android:id="@+id/cb_eight"
+            style="@style/MyCheckBox"
+            android:text="8班" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/cb_all_third"
+            style="@style/MyCheckBox"
+            android:text="全选" />
+
+        <CheckBox
+            android:id="@+id/cb_nine"
+            style="@style/MyCheckBox"
+            android:text="9班" />
+
+        <CheckBox
+            android:id="@+id/cb_ten"
+            style="@style/MyCheckBox"
+            android:text="10班" />
+
+        <CheckBox
+            android:id="@+id/cb_eleven"
+            style="@style/MyCheckBox"
+            android:text="11班" />
+
+        <CheckBox
+            android:id="@+id/cb_twelve"
+            style="@style/MyCheckBox"
+            android:text="12班" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_submit_changed"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_submit_selector"
+        android:visibility="gone"
+        android:text="提交修改"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+</LinearLayout>

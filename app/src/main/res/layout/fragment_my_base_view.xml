@@ -43,6 +43,7 @@
     <RelativeLayout style="@style/MyRelativeLayout">
 
         <TextView
+            android:id="@+id/tv_my_school_number_name"
             style="@style/TextView_My_Left"
             android:drawableLeft="@mipmap/number"
             android:text="工号" />

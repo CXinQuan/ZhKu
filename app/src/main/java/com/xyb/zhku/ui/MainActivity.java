@@ -5,9 +5,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.hxb.easynavigition.view.EasyNavigitionBar;
 import com.xyb.zhku.R;
 import com.xyb.zhku.bean.User;
+import com.xyb.zhku.fragment.manager.ManagerReleaseFragment;
 import com.xyb.zhku.fragment.student.StuHomeFragment;
 import com.xyb.zhku.fragment.student.StuHomeWorkFragment;
 import com.xyb.zhku.fragment.student.StuMyFragment;
@@ -22,7 +23,6 @@ import com.xyb.zhku.fragment.teacher.TeacherHomeFragment;
 import com.xyb.zhku.fragment.teacher.TeacherHomeWorkFragment;
 import com.xyb.zhku.fragment.teacher.TeacherMyFragment;
 import com.xyb.zhku.global.Constants;
-import com.xyb.zhku.utils.NetUtils;
 import com.xyb.zhku.utils.SharePreferenceUtils;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_teacher_main);
         ButterKnife.bind(this);
-       // NetUtils.getNetState(this);
+        // NetUtils.getNetState(this);
 //        Intent intent = getIntent();
 //        int identify = intent.getIntExtra(Constants.IDENTITY, -1);
 //        if (identify != User.STUDENT && identify != User.TEACHER) {
@@ -54,40 +54,63 @@ public class MainActivity extends AppCompatActivity {
 //            finish();
 //        }
         int identify = (int) SharePreferenceUtils.get(this, Constants.IDENTITY, -1);
-        if (identify != User.STUDENT && identify != User.TEACHER) {
+
+        // TODO: 2018/10/16   identify此处用于测试，该行代码需要注释掉
+        //identify = User.MANAGER_TEACHINGTASK;
+
+
+        if (identify != User.STUDENT && identify != User.TEACHER && identify != User.MANAGER_NOTIFY && identify != User.MANAGER_TEACHINGTASK) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            Toast.makeText(this, "账号已过期，请重新登录！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "账号已过期，请重新登录", Toast.LENGTH_SHORT).show();
             finish();
         }
         initNavigitionBar(identify);
     }
 
     public void initNavigitionBar(int identify) {
-        String[] tabText = {"首页", "作业", "我的"};
-        //未选中icon
-        int[] normalIcon = {R.mipmap.home_m, R.mipmap.order_m, R.mipmap.my_m};
-        //选中时icon
-        int[] selectIcon = {R.mipmap.home_s, R.mipmap.order_s, R.mipmap.my_s};
         List<Fragment> fragments = new ArrayList<>();
+
+        String[] tabText = {"首页", "作业", "我的"};
+        int[] normalIcon = {R.mipmap.home_m, R.mipmap.order_m, R.mipmap.my_m};//未选中icon
+        int[] selectIcon = {R.mipmap.home_s, R.mipmap.order_s, R.mipmap.my_s};//选中时icon
+
+        String[] tabTextManager = {"首页", "发布", "我的"};
+        int[] normalIconManager = {R.mipmap.home_m, R.mipmap.release_home_n, R.mipmap.my_m};//未选中icon
+        int[] selectIconManager = {R.mipmap.home_s, R.mipmap.release_home_s, R.mipmap.my_s};//选中时icon
+
         if (identify == User.TEACHER) {
             fragments.add(new TeacherHomeFragment());//getSupportFragmentManager()
             fragments.add(new TeacherHomeWorkFragment());
             fragments.add(new TeacherMyFragment());
-
+            navigitionBar.titleItems(tabText)
+                    .normalIconItems(normalIcon)
+                    .selectIconItems(selectIcon);
         } else if (identify == User.STUDENT) {
             // TODO: 2018/9/30      添加学生的fragment
             fragments.add(new StuHomeFragment());
             fragments.add(new StuHomeWorkFragment());
             fragments.add(new StuMyFragment());
+            navigitionBar.titleItems(tabText)
+                    .normalIconItems(normalIcon)
+                    .selectIconItems(selectIcon);
+        } else if (identify == User.MANAGER_NOTIFY || identify == User.MANAGER_TEACHINGTASK) {
+            fragments.add(new TeacherHomeFragment());
+            fragments.add(new ManagerReleaseFragment(identify));
+            fragments.add(new TeacherMyFragment());
+            navigitionBar.titleItems(tabTextManager)
+                    .normalIconItems(normalIconManager)
+                    .selectIconItems(selectIconManager);
         }
-        navigitionBar.titleItems(tabText)
-                .normalIconItems(normalIcon)
-                .selectIconItems(selectIcon)
-                .fragmentList(fragments)
+
+        navigitionBar.fragmentList(fragments)
                 .selectTextColor(Color.parseColor("#3f84ff"))
                 .fragmentManager(getSupportFragmentManager())
                 .build();
         checkPermissions();
+
+
+
+
 /*
 navigitionBar.titleItems(tabText)      //必传  Tab文字集合
                .normalIconItems(normalIcon)   //必传  Tab未选中图标集合
@@ -150,11 +173,10 @@ navigitionBar.titleItems(tabText)      //必传  Tab文字集合
 
     long firstTime = 0;
 
-    @Override
     public void onBackPressed() {
         long secondTime = System.currentTimeMillis();
         if (secondTime - firstTime > 2000) {
-            Toast.makeText(this, "再次点击退出应用", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "再次点击退出应用程序", Toast.LENGTH_SHORT).show();
             firstTime = secondTime;
         } else {
             finish();

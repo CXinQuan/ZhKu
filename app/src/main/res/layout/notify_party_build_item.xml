@@ -22,7 +22,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="5dp"
             android:text="[通知] "
-            android:textSize="17sp" />
+            android:textSize="17sp"
+           />
 
         <TextView
             android:id="@+id/tv_notify_title"
@@ -34,7 +35,8 @@
             android:gravity="center_vertical"
             android:singleLine="true"
             android:text="关于中秋国庆调课安排预通知，正式通知稍后会公布"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+          />
     </LinearLayout>
     <TextView
         android:id="@+id/tv_notify_content"
@@ -45,7 +47,8 @@
         android:layout_marginRight="8dp"
         android:singleLine="true"
         android:text="000000000000000000000000000000000000000000000000000"
-        android:textColor="#aa666666" />
+        android:textColor="#aa666666"
+       />
 
     <TextView
         android:id="@+id/tv_notify_time"
@@ -55,7 +58,8 @@
         android:layout_below="@+id/tv_notify_content"
         android:layout_marginRight="10dp"
         android:text="2018-9-29 18:02"
-        android:textColor="#55666666" />
+        android:textColor="#55666666"
+    />
 
     <View
         android:layout_width="match_parent"

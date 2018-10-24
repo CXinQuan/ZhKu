@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.bean.User;
+import com.xyb.zhku.utils.MD5Util;
 import com.xyb.zhku.utils.SMSUtil;
 import com.xyb.zhku.utils.SharePreferenceUtils;
 import com.xyb.zhku.utils.UIUtils;
@@ -117,7 +118,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                 if (e == null) {
                     if (object.size() == 1) {
                         final User user = object.get(0);
-                        user.setPassword(et_reg_passsword.getText().toString().trim());
+                        user.setPassword(MD5Util.encrypt(et_reg_passsword.getText().toString().trim()));
                         user.update(user.getObjectId(), new UpdateListener() {
                             public void done(BmobException e) {
                                 if (e == null) {
@@ -128,7 +129,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                                     isSubmiting_toBMob = false;
                                     // TODO: 2018/9/22    判断是老师的主页 还是 学生的主页
 
-                                    jumpToAnotherActivity(TestActivity.class);
+                                    jumpToAnotherActivity(MainActivity.class);
                                     finish();
                                 } else {
                                     showToast("服务器繁忙，修改失败!");

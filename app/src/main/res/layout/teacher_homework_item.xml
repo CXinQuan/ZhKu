@@ -65,7 +65,7 @@
             android:layout_marginTop="15dp"
             android:singleLine="true"
             android:text="内容：第一次实验使用Matalab时间内管理局的方式来关键是放大来看份"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <!--<TextView-->
             <!--android:layout_width="wrap_content"-->

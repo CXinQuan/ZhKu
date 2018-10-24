@@ -16,4 +16,6 @@
     <color name="btn_cancle_selected">#3f84ff</color> <!-- 选中文字颜色 -->
     <color name="btn_cancle_normal">#24b6e9</color> <!-- 选中文字颜色 -->
 
+    <color name="rb_not_selected">#9f9f9f</color>
+
 </resources>
