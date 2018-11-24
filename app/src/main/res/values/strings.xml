@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">仲恺</string>
+    <string name="app_name">仲恺师生交互</string>
 
     <string-array name="skip">
         <item></item>

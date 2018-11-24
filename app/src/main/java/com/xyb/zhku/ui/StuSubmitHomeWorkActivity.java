@@ -19,13 +19,10 @@ import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.bean.StudentHomeWork;
 import com.xyb.zhku.bean.TeacherHomeWork;
-import com.xyb.zhku.bean.TeacherNotify;
 import com.xyb.zhku.global.Constants;
 import com.xyb.zhku.manager.SubmitHomeworkObserverManager;
 import com.xyb.zhku.utils.FileUtil;
 import com.xyb.zhku.utils.SharePreferenceUtils;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -191,10 +188,12 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
 //                    BmobFile file;//附件（上交的作业）
 //                    String teacher_homework_id; //对应老师作业的id
                 String major = (String) SharePreferenceUtils.get(mCtx, Constants.MAJOR, "");
-                String uclass = (String) SharePreferenceUtils.get(mCtx, Constants.UCLASS, "");
+                int uclass = (int) SharePreferenceUtils.get(mCtx, Constants.UCLASS, -1);
                 final String school_number = (String) SharePreferenceUtils.get(mCtx, Constants.SCHOOL_NUMBER, "");
+                final String enrollment_year = (String) SharePreferenceUtils.get(mCtx, Constants.ENROLLMENT_YEAR, "");
+
                 String name = (String) SharePreferenceUtils.get(mCtx, Constants.NAME, "");
-                if (major.equals("") || uclass.equals("") || school_number.equals("") || name.equals("")) {
+                if (major.equals("") || uclass == -1 || school_number.equals("") || name.equals("") || enrollment_year.equals("")) {
                     showToast("账号异常，请重新登录");
                     return;
                 }
@@ -250,6 +249,7 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
                         stuhomeWork.setStu_name(name);
                         stuhomeWork.setStu_school_number(school_number);
                         stuhomeWork.setStu_major(major);
+                        stuhomeWork.setEnrollment_year(enrollment_year);
                         stuhomeWork.setTeacher_homework_id(teacherhomeWork.getObjectId());
                         stuhomeWork.save(new SaveListener<String>() {
                             public void done(final String objectId, BmobException e) {
@@ -335,7 +335,11 @@ public class StuSubmitHomeWorkActivity extends BaseActivity {
 
                 break;
             case R.id.iv_head_back:
-                finish();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    finishAfterTransition();
+                } else {
+                    finish();
+                }
                 break;
 
         }

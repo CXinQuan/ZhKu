@@ -1,10 +1,11 @@
 package com.xyb.zhku.base;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,6 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xyb.zhku.R;
 import com.xyb.zhku.bean.StuNotify;
-import com.xyb.zhku.bean.TeacherNotify;
 import com.xyb.zhku.ui.NotifyDetailActivity;
 
 import java.util.ArrayList;
@@ -57,11 +57,12 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
 
     @Override
     protected void init(View view) {
+        // getActivity().getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);// 允许使用transitions
         adapter = new NotifyAdapter();
         recyclerview.setAdapter(adapter);
         initHeadView(iv_type_icon, tv_type_text);
         initSmartRefreshLayout();
-       // pb.setVisibility(View.VISIBLE);  不能在此显示，只有加载数据的时候才显示，因为重新加载界面不定重新加载数据，所以就看你导致不消失
+        // pb.setVisibility(View.VISIBLE);  不能在此显示，只有加载数据的时候才显示，因为重新加载界面不定重新加载数据，所以就看你导致不消失
     }
 
     /**
@@ -153,16 +154,16 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
                                 adapter.notifyDataSetChanged();
                                 pb.setVisibility(View.GONE);
                             } else {
-                              //  showToast("没有更多数据...");
-                               // pb.setVisibility(View.GONE);
+                                //  showToast("没有更多数据...");
+                                // pb.setVisibility(View.GONE);
                                 smartrefreshlayout.setNoMoreData(true); // 没有更多数据
 
                             }
                         } else {
                             showToast("服务器繁忙！");
-                           // pb.setVisibility(View.GONE);
+                            // pb.setVisibility(View.GONE);
                         }
-                       pb.setVisibility(View.GONE);
+                        pb.setVisibility(View.GONE);
                         smartrefreshlayout.finishLoadMore(800);
                     }
                 });
@@ -238,7 +239,7 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
             this.position = position;
         }
 
-        public NotifyViewHolder(View itemView) {
+        public NotifyViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             //initTvContent(itemView);
@@ -246,7 +247,22 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(mCtx, NotifyDetailActivity.class);
                     intent.putExtra("Notify", lists.get(position));
-                    startActivity(intent);
+                    //   Pair<String, TextView> pair = Pair.create("textViewTitle", tv_notify_time);
+                    //      Pair<String, TextView> pair2 = Pair.create("textViewContent", tv_notify_content);
+                    //   Pair<String,TextView> textViewTitle = Pair.create("textViewTitle",tv_notify_title);// 将原本的ImageView换成View，因为itemView也是View 类型
+                    //  Pair< String,TextView> textViewContent = Pair.create("textViewContent",tv_notify_content);
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),
+                                    Pair.create(itemView.findViewById(R.id.tv_notify_time), "textViewTime"),
+                                    Pair.create(itemView.findViewById(R.id.tv_notify_title), "textViewTitle"),
+                                    Pair.create(itemView.findViewById(R.id.tv_notify_content), "textViewContent")
+//                                     Pair.create("textViewTitle", tv_notify_time),
+//                                          Pair.create("textViewContent", tv_notify_content)
+                            ).toBundle());
+                        }else {
+                            startActivity(intent);
+                        }
                 }
             });
         }

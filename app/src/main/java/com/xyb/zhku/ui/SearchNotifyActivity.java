@@ -1,5 +1,6 @@
 package com.xyb.zhku.ui;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +80,7 @@ public class SearchNotifyActivity extends BaseActivity {
     @BindView(R.id.iv_cancle)
     ImageView iv_cancle;
     @BindView(R.id.iv_head_back)
-    ImageView iv_head_back;
+    View iv_head_back;
 
     private String[] limits;
     private String[] skips;
@@ -292,7 +294,7 @@ public class SearchNotifyActivity extends BaseActivity {
                 // 隐藏软键盘
                 imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
 
-                if (identity != User.STUDENT && identity != User.TEACHER) {
+                if (identity != User.STUDENT && identity != User.TEACHER && identity != User.MANAGER_TEACHINGTASK && identity != User.MANAGER_NOTIFY) {
                     Toast.makeText(this, "账号异常，建议退出重新登录", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -305,7 +307,7 @@ public class SearchNotifyActivity extends BaseActivity {
                 rv.setVisibility(View.GONE);
                 pb.setVisibility(View.VISIBLE);
                 tv_not_data.setVisibility(View.GONE);
-                if (identity == User.TEACHER) {
+                if (identity == User.TEACHER || identity == User.MANAGER_NOTIFY || identity == User.MANAGER_TEACHINGTASK) {
                     getTeacherNotifyFromBmob(limitBmob, skipBmob, dayBmob, et_condition.getText().toString().trim());
                 } else if (identity == User.STUDENT) {
                     getStuNotifyFromBmob(limitBmob, skipBmob, dayBmob, et_condition.getText().toString().trim());
@@ -498,7 +500,7 @@ public class SearchNotifyActivity extends BaseActivity {
             this.position = position;
         }
 
-        public NotifyViewHolder(View itemView) {
+        public NotifyViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -506,7 +508,16 @@ public class SearchNotifyActivity extends BaseActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(mCtx, NotifyDetailActivity.class);
                     intent.putExtra("Notify", notifies.get(position));
-                    startActivity(intent);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(SearchNotifyActivity.this,
+                                Pair.create(iv_head_back, "iv_head_back"),
+                                Pair.create(itemView.findViewById(R.id.tv_notify_time), "textViewTime"),
+                                Pair.create(itemView.findViewById(R.id.tv_notify_title), "textViewTitle"),
+                                Pair.create(itemView.findViewById(R.id.tv_notify_content), "textViewContent")
+                        ).toBundle());
+                    } else {
+                        startActivity(intent);
+                    }
                 }
             });
         }

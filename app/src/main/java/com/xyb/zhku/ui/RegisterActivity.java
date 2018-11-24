@@ -314,7 +314,7 @@ public class RegisterActivity extends BaseActivity {
                             user.setIdentity(User.STUDENT);
                             user.setEnrollment_year(act_reg_enrollment_year.getText().toString().trim());
                             user.setMajor(act_reg_major.getText().toString().trim());
-                            user.setuClass(act_reg_class.getText().toString().trim());
+                            user.setClassNumber(Integer.parseInt(act_reg_class.getText().toString().trim()));
                         } else {
                             user.setIdentity(User.TEACHER);
                         }

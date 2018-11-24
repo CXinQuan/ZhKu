@@ -1,165 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.xyb.zhku.ui.ReleaseHomeworkActivity">
-
-    <LinearLayout
+    android:layout_height="match_parent">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/head_view" />
+        android:id="@+id/scrollView"
+        tools:context="com.xyb.zhku.ui.ReleaseHomeworkActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/head_view" />
+
+            <!--          <LinearLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="10dp">
+
+                          <android.support.v7.widget.CardView
+                              android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              app:cardCornerRadius="6dp"
+                              app:cardElevation="8dp"
+                              app:cardUseCompatPadding="true"
+                              app:contentPadding="8dp">
+
+                              <AutoCompleteTextView
+                                  android:id="@+id/act_homewwork_major"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:background="@null"
+                                  android:hint="专业 如：电子信息工程"
+                                  android:singleLine="true"
+                                  android:textColor="#999999"
+                                  android:textColorHint="#55666666"
+                                  android:textSize="13sp" />
+                          </android.support.v7.widget.CardView>
+
+                          <android.support.v7.widget.CardView
+                              android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              app:cardCornerRadius="6dp"
+                              app:cardElevation="8dp"
+                              app:cardUseCompatPadding="true"
+                              app:contentPadding="8dp">
+
+                              <AutoCompleteTextView
+                                  android:id="@+id/act_enrollment_year"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:background="@null"
+                                  android:hint="年级 如:2015"
+                                  android:singleLine="true"
+                                  android:textColor="#999999"
+                                  android:textColorHint="#55666666"
+                                  android:textSize="13sp" />
+                          </android.support.v7.widget.CardView>
+
+                      </LinearLayout>
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="8dp"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/act_homewwork_subject"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="科目 如：通信原理"
+                            android:singleLine="true"
+                            android:textColor="#999999"
+                            android:textColorHint="#55666666"
+                            android:textCursorDrawable="@drawable/my_cursor"
+                            android:textSize="13sp" />
+                    </android.support.v7.widget.CardView>-->
 
             <android.support.v7.widget.CardView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="2"
+                        android:text="课程:"
+                        android:textColor="#99555555" />
+
+                    <Spinner
+                        android:id="@+id/Sp_subject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="8dp"
                 app:cardUseCompatPadding="true"
                 app:contentPadding="8dp">
 
                 <AutoCompleteTextView
-                    android:id="@+id/act_homewwork_major"
+                    android:id="@+id/act_homewwork_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="专业 如：电子信息工程"
+                    android:hint="添加标题"
                     android:singleLine="true"
                     android:textColor="#999999"
                     android:textColorHint="#55666666"
-                    android:textSize="13sp" />
+                    android:textCursorDrawable="@drawable/my_cursor" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="8dp"
                 app:cardUseCompatPadding="true"
                 app:contentPadding="8dp">
 
-                <AutoCompleteTextView
-                    android:id="@+id/act_enrollment_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="年级 如:2015"
-                    android:singleLine="true"
-                    android:textColor="#999999"
-                    android:textColorHint="#55666666"
-                    android:textSize="13sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/enclosure" />
+
+                    <TextView
+                        android:id="@+id/tv_homework_filename"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:singleLine="true"
+                        android:text="点击添加附件"
+                        android:textColor="#55666666" />
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="8dp"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="8dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/act_homewwork_subject"
+            <EditText
+                android:id="@+id/act_homewwork_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="科目 如：通信原理"
-                android:singleLine="true"
-                android:textColor="#999999"
-                android:textColorHint="#55666666"
-                android:textCursorDrawable="@drawable/my_cursor"
-                android:textSize="13sp" />
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="8dp"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="8dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/act_homewwork_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="添加标题"
-                android:singleLine="true"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@drawable/inputtext"
+                android:elevation="10dp"
+                android:enabled="true"
+                android:gravity="top"
+                android:hint="作业要求/说明"
+                android:maxLines="100"
+                android:minLines="10"
+                android:scrollbars="vertical"
                 android:textColor="#999999"
                 android:textColorHint="#55666666"
                 android:textCursorDrawable="@drawable/my_cursor" />
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="8dp"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="8dp">
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_release"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/login_btn_bg"
+                android:gravity="center"
+                android:text="发布"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </ScrollView>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/enclosure" />
-
-                <TextView
-                    android:id="@+id/tv_homework_filename"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:singleLine="true"
-                    android:text="点击添加附件"
-                    android:textColor="#55666666" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <EditText
-            android:id="@+id/act_homewwork_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:background="@drawable/inputtext"
-            android:elevation="10dp"
-            android:enabled="true"
-            android:gravity="top"
-            android:hint="作业要求/说明"
-            android:maxLines="100"
-            android:minLines="10"
-            android:scrollbars="vertical"
-            android:textColor="#999999"
-            android:textColorHint="#55666666"
-            android:textCursorDrawable="@drawable/my_cursor" />
-
-        <TextView
-            android:id="@+id/tv_release"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/login_btn_bg"
-            android:gravity="center"
-            android:text="发布"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-    </LinearLayout>
-</ScrollView>
+    <TextView
+        android:id="@+id/tv_not_teaching_task"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="您还没有教学任务" />
+</FrameLayout>

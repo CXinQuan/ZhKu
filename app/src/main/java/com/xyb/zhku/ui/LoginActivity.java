@@ -1,5 +1,6 @@
 package com.xyb.zhku.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,9 +17,10 @@ import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.bean.User;
 import com.xyb.zhku.utils.MD5Util;
-import com.xyb.zhku.utils.SMSUtil;
 import com.xyb.zhku.utils.SharePreferenceUtils;
+import com.xyb.zhku.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -73,8 +76,12 @@ public class LoginActivity extends BaseActivity {
                 jumpToAnotherActivity(ForgetPasswordActivity.class);
                 break;
             case R.id.tv_login:
-                if (!SMSUtil.judgePhoneNums(mEtUserPhone.getText().toString().trim())) {
-                    showToast("请正确输入手机号码！");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                // 隐藏软键盘
+                imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+                //  if (!SMSUtil.judgePhoneNums(mEtUserPhone.getText().toString().trim())) {
+                if (!Utils.isAccountNumber(mEtUserPhone.getText().toString().trim())) {
+                    showToast("请正确输入账号！");
                     return;
                 }
                 if (mEtUserPassword.getText().toString().trim() == null ||
@@ -84,9 +91,18 @@ public class LoginActivity extends BaseActivity {
                 }
                 mBtnLogin.setText("正在登录，请稍后...");
                 BmobQuery<User> query = new BmobQuery<User>();
-                //查询条件
-                query.addWhereEqualTo("phone", mEtUserPhone.getText().toString().trim());
-                query.addWhereEqualTo("password",MD5Util.encrypt(mEtUserPassword.getText().toString().trim()));
+                //查询条件  根据 学号 或者 手机号码进行查询
+                //  query.addWhereEqualTo("phone", mEtUserPhone.getText().toString().trim());
+                BmobQuery<User> queryPhone = new BmobQuery<User>();
+                BmobQuery<User> querySchoolNumber = new BmobQuery<User>();
+                queryPhone.addWhereEqualTo("phone", mEtUserPhone.getText().toString().trim());
+                querySchoolNumber.addWhereEqualTo("school_number", mEtUserPhone.getText().toString().trim());
+                List<BmobQuery<User>> accountNumber = new ArrayList<BmobQuery<User>>();
+                accountNumber.add(queryPhone);
+                accountNumber.add(querySchoolNumber);
+
+                query.or(accountNumber);
+                query.addWhereEqualTo("password", MD5Util.encrypt(mEtUserPassword.getText().toString().trim()));
                 //返回1条数据，如果不加上这条语句，默认返回10条数据
                 query.setLimit(1);
                 //执行查询方法
@@ -100,8 +116,7 @@ public class LoginActivity extends BaseActivity {
                                     // TODO: 2018/9/22    保存用户信息
                                     SharePreferenceUtils.saveUser(mCtx, user);
                                 }
-                                showToast("登录成功");
-                                mBtnLogin.setText("登录");
+
                                 // TODO: 2018/9/22    判断是老师的主页 还是 学生的主页
 //                                if (user.getIdentity() == User.STUDENT) {
 //                                   // jumpToAnotherActivity(StuMainActivity.class_icon);
@@ -114,13 +129,15 @@ public class LoginActivity extends BaseActivity {
                                     //   intent.putExtra(Constants.IDENTITY,identify);
                                     startActivity(intent);
                                 }
+                                //  showToast("登录成功");
+                                //  mBtnLogin.setText("登录");
                                 finish();
                             } else {
                                 mBtnLogin.setText("登录");
                                 showToast("账号或密码输入有误");
                             }
                         } else {
-                            showToast("服务器繁忙");
+                            showToast("服务器离家出走了");
                             mBtnLogin.setText("登录");
                         }
                     }

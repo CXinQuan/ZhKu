@@ -2,19 +2,10 @@ package com.xyb.zhku.fragment.teacher;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.carrier.CarrierService;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.google.gson.FieldNamingStrategy;
 import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -22,7 +13,6 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xyb.zhku.R;
 import com.xyb.zhku.adapter.TeacherHomeworkAdapter;
-import com.xyb.zhku.adapter.TeacherPartyBuildRecycleAdapter;
 import com.xyb.zhku.base.BaseFragment;
 import com.xyb.zhku.bean.TeacherHomeWork;
 import com.xyb.zhku.global.Constants;
@@ -38,8 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;

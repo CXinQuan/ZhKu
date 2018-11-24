@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/head_view" />
+    <include
+        android:id="@+id/headView"
+        layout="@layout/head_view" />
 
     <RelativeLayout
         android:layout_width="match_parent"

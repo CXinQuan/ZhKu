@@ -1,7 +1,7 @@
 package com.xyb.zhku.ui;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.bean.Notify;
-import com.xyb.zhku.bean.StuNotify;
-import com.xyb.zhku.bean.TeacherNotify;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,7 +74,11 @@ public class NotifyDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_head_back:
-                finish();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    finishAfterTransition();
+                } else {
+                    finish();
+                }
                 break;
         }
     }

@@ -9,7 +9,7 @@ import cn.bmob.v3.datatype.BmobFile;
  * Created by lenovo on 2018/9/25.
  */
 
-public class TeacherHomeWork extends BmobObject {
+public class TeacherHomeWork extends BmobObject{
     String teacherId;
     String major; //专业
     String enrollment_year; //年级
@@ -19,6 +19,17 @@ public class TeacherHomeWork extends BmobObject {
     String content;//作业要求
     BmobFile file;//附件
     List<String> stu_number_list;  //用于记录上交的学生
+    List<Integer> classList; // 所有的班级
+
+
+    public List<Integer> getClassList() {
+
+        return classList;
+    }
+
+    public void setClassList(List<Integer> classList) {
+        this.classList = classList;
+    }
 
     public List<String> getStu_number_list() {
         return stu_number_list;
@@ -102,4 +113,6 @@ public class TeacherHomeWork extends BmobObject {
     public void setFile(BmobFile file) {
         this.file = file;
     }
+
+
 }

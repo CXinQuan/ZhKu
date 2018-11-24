@@ -1,5 +1,6 @@
 package com.xyb.zhku.ui;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +33,8 @@ public class TeachingTaskListActivity extends BaseActivity implements TeachingTa
     TextView tvTeacherName;
     @BindView(R.id.tv_teacher_id)
     TextView tvTeacherId;
+    @BindView(R.id.headView)
+    View headView;
 
     @BindView(R.id.recyclerview_AllTeachingTask)
     RecyclerView recyclerviewAllTeachingTask;
@@ -61,7 +64,6 @@ public class TeachingTaskListActivity extends BaseActivity implements TeachingTa
             tvTeacherId.setText("教学工号：" + task.getTeacherId());
             adapter = new TeachingTaskListAdapter();
             recyclerviewAllTeachingTask.setAdapter(adapter);
-
         }
     }
 
@@ -84,7 +86,7 @@ public class TeachingTaskListActivity extends BaseActivity implements TeachingTa
 
     @Override
     public void update(TeachingTask teachingtask) {
-        task=teachingtask;//  因为 task 已经改变了， 如果不修改的话，那么点击另外的则会将修改前的给传过去
+        task = teachingtask;//  因为 task 已经改变了， 如果不修改的话，那么点击另外的则会将修改前的给传过去
         subjectClasses = teachingtask.getList();
         adapter.notifyDataSetChanged();
     }
@@ -172,9 +174,15 @@ public class TeachingTaskListActivity extends BaseActivity implements TeachingTa
                     // TODO: 2018/10/21   显示该教师的 教学任务详情
                     Intent intent = new Intent(mCtx, TeachingTaskDetailActivity.class);
                     intent.putExtra("subjectClass", subjectClasses.get(position));
-                    intent.putExtra("TeachingTask",task);
-                    intent.putExtra("position",position);
-                    startActivity(intent);
+                    intent.putExtra("TeachingTask", task);
+                    intent.putExtra("position", position);
+                    Bundle bundle = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        bundle = ActivityOptions.makeSceneTransitionAnimation(TeachingTaskListActivity.this, headView, "headView").toBundle();
+                        startActivity(intent, bundle);
+                    } else {
+                        startActivity(intent);
+                    }
                 }
             });
         }

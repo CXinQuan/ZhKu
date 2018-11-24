@@ -9,12 +9,14 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseFragment;
@@ -40,7 +42,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by lenovo on 2018/10/16.
  */
 
-public class ReleaseTeachingTaskFragment extends BaseFragment{
+public class ReleaseTeachingTaskFragment extends BaseFragment {
 
     @BindView(R.id.cb_one)
     CheckBox cbOne;
@@ -74,7 +76,6 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
     @BindView(R.id.cb_all_third)
     CheckBox cb_all_third;
 
-
     @BindView(R.id.tv_release)
     Button tvRelease;
     @BindView(R.id.linearLayout_search)
@@ -86,12 +87,15 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
     TextInputEditText textinputedittext_teacherid;
     @BindView(R.id.act_major)
     AutoCompleteTextView actMajor;
-    @BindView(R.id.act_enrollment_year)
-    AutoCompleteTextView actEnrollmentYear;
+    //    @BindView(R.id.act_enrollment_year)
+//    AutoCompleteTextView actEnrollmentYear;
     @BindView(R.id.act_subject)
     AutoCompleteTextView actSubject;
     @BindView(R.id.iv_cancle)
     ImageView iv_cancle;
+
+    @BindView(R.id.Sp_enrollment_year)
+    Spinner Sp_enrollment_year;
 
     List<CheckBox> checkBoxList_All;
     List<CheckBox> checkBoxList_First;
@@ -102,6 +106,8 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
     private String[] allMajor;
 
     User teacher;
+    private TeachingTask.SubjectClass sc;
+
 
     protected int setView() {
         return R.layout.manager_release_teachingtask_fragment;
@@ -109,9 +115,6 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
 
     @Override
     protected void init(View view) {
-
-
-
         // TODO: 2018/10/17   将所有的 CheckBox 添加到一个List 中，最后才能够进行遍历 isCheck
         checkBoxList_All = new ArrayList<>();
         checkBoxList_First = new ArrayList<>();
@@ -185,8 +188,27 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
 
         yearStr = Utils.getYearStr();
         allMajor = Utils.getAllMajor(mCtx);
-        UIUtils.bindArray(actEnrollmentYear, yearStr);
+        // 一条 课程对应班级  的 对象
+        sc = new TeachingTask.SubjectClass();
+        // UIUtils.bindArray(actEnrollmentYear, yearStr);
+
+        // 测试 Spinner
+
+        // TODO: 2018/10/26     改变初始化代码  年级已经改为 Spinner
+        UIUtils.bindSpinnerAdapter(Sp_enrollment_year, yearStr);
         UIUtils.bindArray(actMajor, allMajor);
+
+        Sp_enrollment_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sc.setYear(yearStr[position]);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         textinputedittext_teacherid.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -258,34 +280,58 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
      */
     private void initCheckBox(final List<CheckBox> checkBoxList, final CheckBox checkBoxAll) {
         boolean isChild;// 是否是子CheckBox产生的检查
-//子CheckBox响应全选的CheckBox时 有bug
-//       // 初始化 各个 子的 ChechBox
-//        for (CheckBox checkBox : checkBoxList) { //  checkBoxList_First
-//            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    boolean isAllSelect = true; // 假设全部都已经被选中了
-//                    for (CheckBox checkBox : checkBoxList) { // checkBoxList_First
-//                        if (!checkBox.isChecked()) { // 只要有一个没被选中 ，就说明 不是全部被选中，如果遍历完之后还没有找到  没选中的那么就设置为true了
-//                            isAllSelect = false;
-//                            break;
-//                        }
-//                    }
-//                    checkBoxAll.setChecked(isAllSelect); //cb_all_first
-//                }
-//            });
-//        }
+       //子CheckBox响应全选的CheckBox时 有bug
+       // 初始化 各个 子的 ChechBox
+        for (CheckBox checkBox : checkBoxList) { //  checkBoxList_First
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    boolean isAllSelect = true; // 假设全部都已经被选中了
+                    for (CheckBox checkBox : checkBoxList) { // checkBoxList_First
+                        if (!checkBox.isChecked()) { // 只要有一个没被选中 ，就说明 不是全部被选中，如果遍历完之后还没有找到  没选中的那么就设置为true了
+                            isAllSelect = false;
+                            break;
+                        }
+                    }
+                    checkBoxAll.setChecked(isAllSelect); //cb_all_first
+                }
+            });
+        }
 
         // 初始化 全选的 CheckBox
-        checkBoxAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //<editor-fold desc="使用setOnCheckedChangeListener的初始化">
+/*        checkBoxAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+                Log.d("测试","setOnCheckedChangeListener被执行");
+//                if (isChecked) {
+//                    for (CheckBox checkBox : checkBoxList) {
+//                        checkBox.setChecked(true);
+//                    }
+//                } else {
+//
+//                    for (CheckBox checkBox : checkBoxList) {
+//                        checkBox.setChecked(false);
+//                    }
+//                }
+            }
+        });*/
+        //</editor-fold>
+
+        /**
+         *setOnCheckedChangeListener 会比  setOnClickListener 先被执行，所以应该将该状态设置为当前状态
+         */
+        checkBoxAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            //    Log.d("测试","setOnClickListener被执行");
+                if (checkBoxAll.isChecked()) {
+                    checkBoxAll.setChecked(true);
                     for (CheckBox checkBox : checkBoxList) {
                         checkBox.setChecked(true);
                     }
                 } else {
-
+                    checkBoxAll.setChecked(false);
                     for (CheckBox checkBox : checkBoxList) {
                         checkBox.setChecked(false);
                     }
@@ -294,12 +340,12 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
         });
 
 
+
     }
 
     boolean isReleasing = false;
 
-
-    @OnClick({R.id.linearLayout_search, R.id.tv_release})
+    @OnClick({R.id.linearLayout_search, R.id.tv_release, R.id.iv_cancle})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linearLayout_search:
@@ -314,6 +360,13 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
                     startActivity(intent);
                 }
                 break;
+
+            case R.id.iv_cancle:
+                textinputedittext_teacherid.setText("");
+                iv_cancle.setVisibility(View.GONE);
+                textinputlayout.setError("");
+                break;
+
             case R.id.tv_release:
                 if (isReleasing) {
                     showToast("正在提交，请稍后");
@@ -328,10 +381,10 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
                     showToast("专业输入有误");
                     return;
                 }
-                if (UIUtils.isEmtpy(actEnrollmentYear) || !Arrays.asList(yearStr).contains(actEnrollmentYear.getText().toString())) {
-                    showToast("年级输入有误");
-                    return;
-                }
+//                if (UIUtils.isEmtpy(actEnrollmentYear) || !Arrays.asList(yearStr).contains(actEnrollmentYear.getText().toString())) {
+//                    showToast("年级输入有误");
+//                    return;
+//                }
                 if (UIUtils.isEmtpy(actSubject)) {
                     showToast("课程名不能为空");
                     return;
@@ -348,20 +401,20 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
                     return;
                 }
 
-                // 一条 课程对应班级  的 对象
-                final TeachingTask.SubjectClass sc = new TeachingTask.SubjectClass();
+//                // 一条 课程对应班级  的 对象
+//                sc = new TeachingTask.SubjectClass();
                 String major = actMajor.getText().toString().trim();
                 String subject = actSubject.getText().toString().trim();
-                String year = actEnrollmentYear.getText().toString().trim();
+                //String year = actEnrollmentYear.getText().toString().trim();
                 sc.setMajor(major);
                 sc.setSubject(subject);
-                sc.setYear(year);
-              //  List<String> classList = new ArrayList<>();
+
+                //  List<String> classList = new ArrayList<>();
                 List<Integer> classList = new ArrayList<>();
                 for (int i = 0; i < checkBoxList_All.size(); i++) {
                     if (checkBoxList_All.get(i).isChecked()) {
-                //        classList.add(major + year.substring(2) + (i + 1));
-                        classList.add(i+1);
+                        //        classList.add(major + year.substring(2) + (i + 1));
+                        classList.add(i + 1);
                     }
                 }
                 sc.setClassList(classList);
@@ -429,7 +482,7 @@ public class ReleaseTeachingTaskFragment extends BaseFragment{
     }
 
     private void restoreView() {
-        actEnrollmentYear.setText("");
+        //actEnrollmentYear.setText("");
         actMajor.setText("");
         actSubject.setText("");
         textinputedittext_teacherid.setText("");

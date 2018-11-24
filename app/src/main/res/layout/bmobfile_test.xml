@@ -10,7 +10,7 @@
         android:id="@+id/btn_cumbit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="点击上传图片" />
+        android:text="下载并压缩" />
 
     <Button
         android:id="@+id/btn_query"

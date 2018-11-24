@@ -4,30 +4,33 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.header.TaurusHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseFragment;
 import com.xyb.zhku.bean.StudentHomeWork;
 import com.xyb.zhku.bean.TeacherHomeWork;
-import com.xyb.zhku.bean.TeacherNotify;
 import com.xyb.zhku.ui.StuHomeworkFileActivity;
 import com.xyb.zhku.utils.Utils;
+import com.xyb.zhku.utils.ZipUtils;
 
-import org.w3c.dom.Text;
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,10 +40,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
     @BindView(R.id.tv_submit_count)
@@ -77,7 +86,12 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
     SmartRefreshLayout smartrefreshlayout;
     @BindView(R.id.tv_has_not_stu)
     TextView tv_has_not_stu;
+    @BindView(R.id.progressbar)
+    ProgressBar progressbar;
 
+
+    @BindView(R.id.tv_one_button_download)
+    TextView tv_one_button_download;
 
     int laststate = SCHOOL_NUMBER_UP;
     private static final int SCHOOL_NUMBER_UP = 0;
@@ -222,7 +236,6 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
         smartrefreshlayout.finishRefresh();
     }
 
-
     /**
      * 默认是  学号是升序
      * 状态是  先 未查看，在 已查看  默认降序
@@ -230,7 +243,7 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
      *
      * @param view
      */
-    @OnClick({R.id.ll_school_number, R.id.ll_state, R.id.ll_grade})
+    @OnClick({R.id.ll_school_number, R.id.ll_state, R.id.ll_grade, R.id.tv_one_button_download})
     public void OnClick(View view) {
         iv_grade.setVisibility(View.INVISIBLE);
         iv_state.setVisibility(View.INVISIBLE);
@@ -324,8 +337,167 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                     adapter.notifyDataSetChanged();
                 }
                 break;
+
+            case R.id.tv_one_button_download:
+                if (homeWork.getStu_number_list().size() <= 0) {
+                    showToast("还没学生提交呢，无法下载");
+                    return;
+                }
+
+                progressbar.setVisibility(View.VISIBLE);
+                tv_one_button_download.setVisibility(View.GONE);
+                // TODO: 2018/10/27   一键下载
+                for (int i = 0; i < lists.size(); i++) {
+                    downloadFile(lists.get(i), homeWork.getTitle(), i == lists.size() - 1);
+                }
+                break;
         }
     }
+
+    /**
+     * 使用okHttp 下载文件
+     */
+    public void downloadFile(final StudentHomeWork studentHomeWork, final String teacherHomeWorkTitle, final boolean isLastFile) {
+        //   String url = "http://vfx.mtime.cn/Video/2016/07/24/mp4/160724055620533327_480.mp4";
+        if (studentHomeWork == null) {
+            showToast("下载失败");
+            return;
+        }
+        final BmobFile bmobFile = studentHomeWork.getFile();
+
+
+        Log.d("文件", bmobFile.getFilename() + bmobFile.getUrl());
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .get()
+                .url(bmobFile.getUrl())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //  tv_download_file.setVisibility(View.VISIBLE); // 下载附件 不可见
+                        //   pb_file_download.setVisibility(View.GONE);// 进度圆圈  可见
+                        showToast("服务器繁忙");
+                        progressbar.setVisibility(View.GONE);
+                        tv_one_button_download.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+
+            public void onResponse(Call call, Response response) throws IOException {
+                //拿到字节流
+                InputStream is = response.body().byteStream();
+                int len = 0;
+                // 路径需要一个个创建
+                File pathPackageName = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + getActivity().getPackageName());
+                if (!pathPackageName.exists()) {
+                    pathPackageName.mkdir();
+                }
+                final File pathDownLoadFile = new File(pathPackageName + File.separator + "DownLoadFile");
+                if (!pathDownLoadFile.exists()) {
+                    pathDownLoadFile.mkdirs();
+                }
+                final File pathFile = new File(pathDownLoadFile + File.separator + teacherHomeWorkTitle);
+                if (!pathFile.exists()) {
+                    pathFile.mkdir();
+                }                                     // 201510214103_电子信息工程151_陈鑫权
+//                if (bmobFile.getFilename().endsWith("")) {
+//
+//                }
+                String endName = getEndName(bmobFile.getFilename());
+
+                final File file = new File(pathFile, studentHomeWork.getStu_school_number() + "_" + studentHomeWork.getStu_major() + studentHomeWork.getEnrollment_year().substring(studentHomeWork.getEnrollment_year().toString().length() - 2) + studentHomeWork.getStu_class() + "_" + studentHomeWork.getStu_name() + endName); // bmobFile.getFilename()
+                if (file.exists()) {
+                    file.delete();
+                }
+                FileOutputStream fos = new FileOutputStream(file);
+                byte[] buf = new byte[1024];
+                while ((len = is.read(buf)) != -1) {
+                    fos.write(buf, 0, len);
+                }
+                fos.flush();
+                //关闭流
+                fos.close();
+                is.close();
+
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                       // tv_download_file.setVisibility(View.VISIBLE); // 下载附件 不可见
+//                      //  pb_file_download.setVisibility(View.GONE);// 进度圆圈  可见
+//                       // showToast("下载完成，路径为：" + file.getAbsolutePath());
+//                        // TODO: 2018/10/10    向服务器添加一个学号，表示该学生已经下载
+//                        // TODO: 2018/10/10    不过此处需要判断，只有学生下载老师的作业文件才进行记录，否则 老师或者学生下载通知文件，则不做此操作
+//
+//
+//                    }
+//                })
+                if (isLastFile) {
+                    Log.d("下载完成", "开始压缩");
+                    //  开始 压缩，并获取其 结束 监听
+                    ZipUtils.zip(pathFile.getAbsolutePath(), new ZipUtils.FinishListener() {
+                        @Override
+                        public void onfinish(final File target) {
+                            // TODO: 2018/10/27  压缩结束 ，删除该原文件夹   隐藏该ProgressBar
+                            Utils.showLog("压缩完成");
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showToast("下载完成");
+//                                    Snackbar.make(tv_one_button_download, "下载完成", Snackbar.LENGTH_LONG)
+//                                            .setAction("打开", new View.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(View v) {
+//                                                    //  File[] files = pathFile.listFiles();
+//
+//
+////                                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+////                                                    //      File file = new File("文件夹");
+////                                                    intent.setAction(android.content.Intent.ACTION_VIEW);
+////                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////                                                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+////                                                        intent.setDataAndType(FileProvider.getUriForFile(getActivity().getApplicationContext(), BuildConfig.APPLICATION_ID + ".fileProvider", target), "**/*//*"); // fileProvider
+////                                                    } else {
+////                                                        intent.setDataAndType(Uri.fromFile(pathFile.getParentFile()), "*/*");
+////                                                    }
+////                                                    intent.addCategory(Intent.CATEGORY_OPENABLE);//CATEGORY_DEFAULT
+////                                                    getActivity().startActivity(intent);
+//
+//                                                    //OpenFileUtils.openFiles(mCtx,target.getAbsolutePath());
+//
+//
+////获取父目录
+//                                                     // File parentFlie = new File(file.getParent());
+//                                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                                                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                                                        intent.setDataAndType(FileProvider.getUriForFile(getActivity().getApplicationContext(), BuildConfig.APPLICATION_ID + ".fileProvider", target), "**/*//*"); // fileProvider
+//                                                    } else {
+//                                                        intent.setDataAndType(Uri.fromFile(pathFile.getParentFile()), "*/*");
+//                                                    }
+//                                                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                                                    startActivity(intent);
+//
+//                                                }
+//                                            }).show();
+                                    progressbar.setVisibility(View.GONE);
+                                    tv_one_button_download.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private String getEndName(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
+    }
+
 
     /**
      * 处理某一项已经改变

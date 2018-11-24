@@ -36,6 +36,7 @@
             android:singleLine="true"
             android:text="关于中秋国庆调课安排预通知，正式通知稍后会公布"
             android:textSize="17sp"
+            android:transitionName="textViewTitle"
           />
     </LinearLayout>
     <TextView
@@ -48,6 +49,7 @@
         android:singleLine="true"
         android:text="000000000000000000000000000000000000000000000000000"
         android:textColor="#aa666666"
+        android:transitionName="textViewContent"
        />
 
     <TextView
@@ -59,6 +61,7 @@
         android:layout_marginRight="10dp"
         android:text="2018-9-29 18:02"
         android:textColor="#55666666"
+        android:transitionName="textViewTime"
     />
 
     <View

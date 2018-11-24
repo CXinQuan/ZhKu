@@ -73,8 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-
                 android:hint="年级 如:2015"
+                android:inputType="number"
                 android:singleLine="true"
                 android:textColor="#999999"
                 android:textColorHint="#55666666"
@@ -194,8 +194,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/btn_submit_selector"
-        android:visibility="gone"
         android:text="提交修改"
         android:textColor="#ffffff"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 </LinearLayout>

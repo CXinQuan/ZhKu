@@ -13,13 +13,22 @@ public class StudentHomeWork extends BmobObject {
 
 
     String stu_major; // 学生专业
-    String stu_class; //学生班级
+    int stu_class; //学生班级
     String stu_school_number;//学号
     String stu_name;//姓名
     int stu_state = NOT_CHECK;//状态  是否批改
     float stu_grade = -1.0f;//成绩  默认是-1分
     BmobFile file;//附件（上交的作业）
     String teacher_homework_id; //对应老师作业的id
+    String enrollment_year;
+
+    public String getEnrollment_year() {
+        return enrollment_year;
+    }
+
+    public void setEnrollment_year(String enrollment_year) {
+        this.enrollment_year = enrollment_year;
+    }
 
     public float getStu_grade() {
         return stu_grade;
@@ -37,11 +46,11 @@ public class StudentHomeWork extends BmobObject {
         this.stu_major = stu_major;
     }
 
-    public String getStu_class() {
+    public int getStu_class() {
         return stu_class;
     }
 
-    public void setStu_class(String stu_class) {
+    public void setStu_class(int stu_class) {
         this.stu_class = stu_class;
     }
 

@@ -31,6 +31,7 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/iv_homework"
             android:singleLine="true"
+            android:transitionName="tv_subject"
             android:text="科目：信号通信" />
 
         <TextView
@@ -52,6 +53,7 @@
             android:layout_below="@id/tv_major"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
+            android:transitionName="tv_time"
             android:text="时间：2018-9-25 16:25" />
 
         <TextView
@@ -64,6 +66,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginTop="15dp"
             android:singleLine="true"
+            android:transitionName="tv_title"
             android:text="内容：第一次实验使用Matalab时间内管理局的方式来关键是放大来看份"
             android:textSize="16sp"/>
 

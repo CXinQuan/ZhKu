@@ -32,6 +32,7 @@
                     android:singleLine="true"
                     android:text="第一次实验报告框架的收纳盒V领感动死了GV看见你说的两个会计师的感觉"
                     android:textIsSelectable="true"
+                    android:transitionName="tv_title"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -51,6 +52,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:text="科目：通信原理"
+                        android:transitionName="tv_subject"
                         android:textIsSelectable="true" />
                 </LinearLayout>
 
@@ -72,6 +74,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:text="时间：2018-9-25 22:34"
+                        android:transitionName="tv_time"
                         android:textIsSelectable="true" />
                 </LinearLayout>
 

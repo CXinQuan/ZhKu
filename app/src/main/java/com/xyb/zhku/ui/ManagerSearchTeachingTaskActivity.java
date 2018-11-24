@@ -41,7 +41,7 @@ import static com.xyb.zhku.R.id.iv_head_back;
 public class ManagerSearchTeachingTaskActivity extends BaseActivity implements TeachingTaskObserver {
 
     @BindView(iv_head_back)
-    ImageView ivHeadBack;
+    View ivHeadBack;
     @BindView(et_condition)
     EditText etCondition;
     @BindView(iv_cancle)
@@ -215,10 +215,10 @@ public class ManagerSearchTeachingTaskActivity extends BaseActivity implements T
                     intent.putExtra("SearchTeachingTask_Position", position);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
+                        Pair<View, String> iv_head_back = Pair.create(ivHeadBack, "iv_head_back");// 将原本的ImageView换成View，因为itemView也是View 类型
                         Pair<View, String> teachingTask_item = Pair.create(itemView, "teachingTask_item");
-                        //    Pair<ImageView, String> iv_head_back = Pair.create(ivHeadBack, "iv_head_back");
                         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(ManagerSearchTeachingTaskActivity.this,
-                                teachingTask_item).toBundle());
+                                teachingTask_item, iv_head_back).toBundle());
 //                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(ManagerSearchTeachingTaskActivity.this,
 //                                Pair.create(itemView.findViewById(R.id.tab_icon_iv), "image"),
 //                                Pair.create(itemView.findViewById(R.id.tab_icon_iv), "title"))

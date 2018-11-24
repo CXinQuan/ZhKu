@@ -35,7 +35,7 @@ public class SplashActivity extends BaseActivity {
 
                 String user = (String) SharePreferenceUtils.get(mCtx, Constants.USER, "");
                 int identity = (int) SharePreferenceUtils.get(mCtx, Constants.IDENTITY, -1);
-                if (identity != User.STUDENT && identity != User.TEACHER) {
+                if (identity != User.STUDENT && identity != User.TEACHER && identity != User.MANAGER_NOTIFY && identity != User.MANAGER_TEACHINGTASK) {
                     jumpToAnotherActivity(LoginActivity.class);
                 } else {
                     // TODO: 2018/9/22    判断是老师的主页 还是 学生的主页
@@ -52,8 +52,10 @@ public class SplashActivity extends BaseActivity {
                 }
                 finish();
             }
+
             public void onAnimationRepeat(Animation animation) {
             }
+
             public void onAnimationStart(Animation animation) {
             }
         });

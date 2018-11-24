@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/smartrefreshlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smartrefreshlayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,15 +18,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
                 <!--图片名 title-->
-                <!--<android.support.design.widget.CollapsingToolbarLayout-->
-                    <!--android:id="@+id/main.collapsing"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="200dp"-->
-                    <!--android:fitsSystemWindows="true"-->
-                    <!--app:contentScrim="?attr/colorPrimary"-->
-                    <!--app:expandedTitleMarginEnd="64dp"-->
-                    <!--app:expandedTitleMarginStart="48dp"-->
-                    <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/main.collapsing"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:fitsSystemWindows="true"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:expandedTitleMarginEnd="64dp"
+                    app:expandedTitleMarginStart="48dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -37,13 +38,13 @@
                         app:layout_scrollFlags="scroll|exitUntilCollapsed" />
 
                     <!--<android.support.v7.widget.Toolbar-->
-                        <!--android:id="@+id/toolbar"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="?attr/actionBarSize"-->
-                        <!--app:layout_collapseMode="pin"-->
-                        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-                        <!--/>-->
-                <!--</android.support.design.widget.CollapsingToolbarLayout>-->
+                    <!--android:id="@+id/toolbar"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="?attr/actionBarSize"-->
+                    <!--app:layout_collapseMode="pin"-->
+                    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+                    <!--/>-->
+                </android.support.design.widget.CollapsingToolbarLayout>
 
             </android.support.design.widget.AppBarLayout>
 
@@ -54,15 +55,16 @@
                 app:layoutManager="LinearLayoutManager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="15dp"
-                android:background="@drawable/release_fab"
-
-                android:src="@mipmap/release" />
         </android.support.design.widget.CoordinatorLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="15dp"
+            android:background="@drawable/release_fab"
+            android:src="@mipmap/release" />
+    </RelativeLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

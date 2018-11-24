@@ -15,6 +15,7 @@
         android:layout_marginTop="10dp"
         android:text="2018-9-29 18:02"
         android:textColor="#55666666"
+        android:transitionName="textViewTime"
    />
 
     <TextView
@@ -30,7 +31,7 @@
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
         android:singleLine="true"
-
+        android:transitionName="textViewTitle"
         android:text="关于我校第六届教学名师评选及第九届广东省高等学校教学名师推荐工作" />
 
     <TextView
@@ -44,6 +45,7 @@
         android:singleLine="true"
         android:text="各位老师：我校第六届教学名师评选及第九届广东省高等学校教学名师推荐工作截止时间是9 月 28 日（即明天），请需要申请的老师尽快把材料交给我。"
         android:textColor="#55666666"
+        android:transitionName="textViewContent"
       />
 
     <View

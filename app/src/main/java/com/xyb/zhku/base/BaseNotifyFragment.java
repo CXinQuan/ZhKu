@@ -1,8 +1,11 @@
 package com.xyb.zhku.base;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +63,8 @@ public abstract class BaseNotifyFragment extends BaseFragment {
         // tv_type_text.setText("教学");
         initHeadView(iv_type_icon, tv_type_text);
         initSmartRefreshLayout();
-       // pb.setVisibility(View.VISIBLE); 不能在此显示，只有加载数据的时候才显示，因为重新加载界面不一定重新加载数据，所以就导致不消失
-      // 会 onViewCreated  但不会 onActivityCreated
+        // pb.setVisibility(View.VISIBLE); 不能在此显示，只有加载数据的时候才显示，因为重新加载界面不一定重新加载数据，所以就导致不消失
+        // 会 onViewCreated  但不会 onActivityCreated
     }
 
     /**
@@ -157,7 +160,7 @@ public abstract class BaseNotifyFragment extends BaseFragment {
                                 adapter.notifyDataSetChanged();
                                 pb.setVisibility(View.GONE);
                             } else {
-                              //  showToast("没有更多数据...");
+                                //  showToast("没有更多数据...");
                                 smartrefreshlayout.setNoMoreData(true);
 
                             }
@@ -241,7 +244,7 @@ public abstract class BaseNotifyFragment extends BaseFragment {
             this.position = position;
         }
 
-        public NotifyViewHolder(View itemView) {
+        public NotifyViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             //initTvContent(itemView);
@@ -250,7 +253,15 @@ public abstract class BaseNotifyFragment extends BaseFragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(mCtx, NotifyDetailActivity.class);
                     intent.putExtra("Notify", lists.get(position));
-                    startActivity(intent);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),
+                                Pair.create(itemView.findViewById(R.id.tv_notify_time), "textViewTime"),
+                                Pair.create(itemView.findViewById(R.id.tv_notify_title), "textViewTitle"),
+                                Pair.create(itemView.findViewById(R.id.tv_notify_content), "textViewContent")
+                        ).toBundle());
+                    } else {
+                        startActivity(intent);
+                    }
                 }
             });
         }

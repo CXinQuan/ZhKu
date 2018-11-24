@@ -94,6 +94,14 @@ public class UIUtils {
             spinner.setAdapter(adapter);
         }
     }
+
+    public static void bindSpinnerAdapter(Spinner spinner, List<String> arr) {   //simple_dropdown_item_1line  simple_spinner_item
+        if (spinner != null && arr != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, arr);
+            spinner.setAdapter(adapter);
+        }
+    }
+
     /**
      * 根据手机的分辨率dip 的单位转成px
      */

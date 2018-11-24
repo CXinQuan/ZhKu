@@ -38,7 +38,8 @@
                     android:text="标题"
                     android:textIsSelectable="true"
                     android:textColor="#999999"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:transitionName="textViewTitle"/>
 
                 <TextView
                     android:id="@+id/tv_notify_time"
@@ -47,6 +48,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/tv_notify_title"
                     android:text="2018-9-30 17:38"
+                    android:transitionName="textViewTime"
                     android:textColor="#99999999" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -103,6 +105,7 @@
                 android:textIsSelectable="true"
                 android:text="作业要求/说明"
                 android:textColor="#999999"
+                android:transitionName="textViewContent"
                 android:textSize="17sp"
                 android:scrollbars="vertical"
                 />

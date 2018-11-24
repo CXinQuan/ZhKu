@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.bean.TeachingTask;
 import com.xyb.zhku.utils.FileUtil;
+import com.xyb.zhku.utils.ZipUtils;
 
 import java.io.File;
 import java.util.List;
@@ -50,9 +52,20 @@ public class BmobFileTestActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 // selectFile();
-              //  testListInList();
-              //  BmobFile file=new BmobFile();
+                //  testListInList();
+                //  BmobFile file=new BmobFile();
+                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
+                        + getPackageName() + File.separator + "测试");
+                if (!file.exists()) {
+                    file.mkdirs();
+                }
+                Log(file.getAbsolutePath(), "测试");
+                ZipUtils.zip(file.getAbsolutePath(), new ZipUtils.FinishListener() {
+                    @Override
+                    public void onfinish(File target) {
 
+                    }
+                });
 
             }
         });

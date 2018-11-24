@@ -23,6 +23,7 @@
             android:layout_marginTop="10dp"
             android:text="2018-9-29 18:02"
             android:textColor="#55666666"
+            android:transitionName="textViewTime"
             />
 
         <TextView
@@ -37,7 +38,7 @@
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:singleLine="true"
-
+            android:transitionName="textViewTitle"
             android:text="《转发广东省科技厅关于申报2018～2019年度国际科技合作领域项目的通知》" />
 
         <TextView
@@ -51,6 +52,7 @@
             android:singleLine="true"
             android:text=" 广东省科学技术厅关于发布2018～2019年度国际科技合作领域项目指南的通知"
             android:textColor="#55666666"
+            android:transitionName="textViewContent"
           />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

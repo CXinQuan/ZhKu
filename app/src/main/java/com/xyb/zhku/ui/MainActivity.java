@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         int identify = (int) SharePreferenceUtils.get(this, Constants.IDENTITY, -1);
 
         // TODO: 2018/10/16   identify此处用于测试，该行代码需要注释掉
-        //identify = User.MANAGER_TEACHINGTASK;
-
+        // identify = User.MANAGER_TEACHINGTASK;
 
         if (identify != User.STUDENT && identify != User.TEACHER && identify != User.MANAGER_NOTIFY && identify != User.MANAGER_TEACHINGTASK) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -183,16 +182,16 @@ navigitionBar.titleItems(tabText)      //必传  Tab文字集合
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case 111:
-                    break;
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (resultCode == RESULT_OK) {
+//            switch (requestCode) {
+//                case 111:
+//                    break;
+//            }
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
 
 
     /* 检查使用权限 */

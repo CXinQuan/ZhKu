@@ -49,7 +49,15 @@ public class User extends BmobObject {
     /**
      * 班级
      */
-    String uClass;
+    int classNumber;
+
+    public int getClassNumber() {
+        return classNumber;
+    }
+
+    public void setClassNumber(int classNumber) {
+        this.classNumber = classNumber;
+    }
 
     public String getPhone() {
         return phone;
@@ -115,11 +123,11 @@ public class User extends BmobObject {
         this.major = major;
     }
 
-    public String getuClass() {
-        return uClass;
-    }
-
-    public void setuClass(String uClass) {
-        this.uClass = uClass;
-    }
+//    public String getuClass() {
+//        return uClass;
+//    }
+//
+//    public void setuClass(String uClass) {
+//        this.uClass = uClass;
+//    }
 }

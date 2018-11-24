@@ -1,35 +1,32 @@
 package com.xyb.zhku.ui;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.DialogPreference;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.bean.TeacherHomeWork;
+import com.xyb.zhku.bean.TeachingTask;
 import com.xyb.zhku.global.Constants;
-import com.xyb.zhku.manager.ReleaseHomeworkObserver;
 import com.xyb.zhku.manager.ReleaseHomeworkObserverManager;
 import com.xyb.zhku.utils.FileUtil;
 import com.xyb.zhku.utils.SharePreferenceUtils;
 import com.xyb.zhku.utils.UIUtils;
-import com.xyb.zhku.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,24 +34,37 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 public class ReleaseHomeworkActivity extends BaseActivity {
+
+    private static final int SCROLLVIEW = 1;
+    private static final int TEXTVIEW = 2;
+
     @BindView(R.id.iv_head_back)
     ImageView iv_head_back;
     @BindView(R.id.tv_head_content)
     TextView tv_head_content;
 
-    @BindView(R.id.act_enrollment_year)
-    AutoCompleteTextView act_enrollment_year;
+//    @BindView(R.id.act_enrollment_year)
+//    AutoCompleteTextView act_enrollment_year;
+//    @BindView(R.id.act_homewwork_major)
+//    AutoCompleteTextView act_homewwork_major;
+//    @BindView(R.id.act_homewwork_subject)
+//    AutoCompleteTextView act_homewwork_subject;
 
-    @BindView(R.id.act_homewwork_major)
-    AutoCompleteTextView act_homewwork_major;
-    @BindView(R.id.act_homewwork_subject)
-    AutoCompleteTextView act_homewwork_subject;
+    @BindView(R.id.tv_not_teaching_task)
+    TextView tv_not_teaching_task;
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
+    @BindView(R.id.Sp_subject)
+    Spinner Sp_subject;
+
     @BindView(R.id.act_homewwork_title)
     AutoCompleteTextView act_homewwork_title;
     @BindView(R.id.tv_homework_filename)
@@ -63,22 +73,104 @@ public class ReleaseHomeworkActivity extends BaseActivity {
     EditText act_homewwork_content;
     @BindView(R.id.tv_release)
     TextView tv_release;
-    private String[] allMajor;
-
+    //    private String[] yearStr;
+//    private String[] allMajor;
     TeacherHomeWork teacherHomeWork;
     private boolean isSubmiting_homework = false;
     private boolean isSubmiting_file = false;
-    private String[] yearStr;
+    private TeachingTask task;
+    private List<String> subjectList;
+    private List<TeachingTask.SubjectClass> taskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tv_head_content.setText("发布作业");
         teacherHomeWork = new TeacherHomeWork();
-        allMajor = Utils.getAllMajor(mCtx);
-        yearStr = Utils.getYearStr();
-        UIUtils.bindArray(act_homewwork_major, allMajor);
-        UIUtils.bindArray(act_enrollment_year,yearStr);
+//        allMajor = Utils.getAllMajor(mCtx);
+//        yearStr = Utils.getYearStr();
+//        UIUtils.bindArray(act_homewwork_major, allMajor);
+//        UIUtils.bindArray(act_enrollment_year,yearStr);
+        initData();
+
+    }
+
+    private void initData() {
+        String teacherId = (String) SharePreferenceUtils.get(mCtx, Constants.SCHOOL_NUMBER, "");
+        if (teacherId.equals("")) {
+            showView(TEXTVIEW);
+            tv_not_teaching_task.setText("账号异常，建议重新登录");
+            return;
+        }
+        BmobQuery<TeachingTask> query = new BmobQuery<TeachingTask>();
+        query.addWhereEqualTo("teacherId", teacherId);
+        query.setLimit(1);
+        query.findObjects(new FindListener<TeachingTask>() {
+            public void done(List<TeachingTask> object, BmobException e) {
+                if (e == null) {
+                    if (object.size() > 0) {
+                        task = object.get(0);
+//                        if (task != null) {
+
+
+//                        } else {
+//                            showView(TEXTVIEW);
+//                            tv_not_teaching_task.setText("您还没有教学任务");
+//                        }
+                        showView(SCROLLVIEW);
+                        subjectList = new ArrayList<String>();
+                        taskList = task.getList();
+                        for (TeachingTask.SubjectClass subjectClass : taskList) {
+                            subjectList.add(subjectClass.getSubject());
+                        }
+                        UIUtils.bindSpinnerAdapter(Sp_subject, subjectList);
+                    } else {
+                        showView(TEXTVIEW);
+                        tv_not_teaching_task.setText("您还没有教学任务");
+                    }
+                } else {
+                    showView(TEXTVIEW);
+                    tv_not_teaching_task.setText("服务器离家出走了");
+                }
+            }
+        });
+        Sp_subject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                for (int i = 0; i < subjectList.size(); i++) {
+                    if (taskList.get(i).getSubject().equals(subjectList.get(i))) {
+                        TeachingTask.SubjectClass subjectClass = taskList.get(i);
+                        teacherHomeWork.setEnrollment_year(subjectClass.getYear());
+                        teacherHomeWork.setMajor(subjectClass.getMajor());
+                        teacherHomeWork.setSubject(subjectClass.getSubject());
+                        teacherHomeWork.setClassList(subjectClass.getClassList());
+                        break;
+                    }
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    /**
+     * 显示 ScrollView 还是 异常View
+     *
+     * @param type
+     */
+    private void showView(int type) {
+        switch (type) {
+            case SCROLLVIEW:
+                tv_not_teaching_task.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
+                break;
+            case TEXTVIEW:
+                tv_not_teaching_task.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.GONE);
+                break;
+        }
     }
 
     public int setContentViewLayout() {
@@ -92,19 +184,19 @@ public class ReleaseHomeworkActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_release:
-                if (UIUtils.isEmtpy(act_homewwork_major)) {
-                    showToast("专业不能为空！");
-                    return;
-                }
-                if (UIUtils.isEmtpy(act_enrollment_year)) {
-                    showToast("年级不能为空！");
-                    return;
-                }
-
-                if (UIUtils.isEmtpy(act_homewwork_subject)) {
-                    showToast("科目不能为空！");
-                    return;
-                }
+//                if (UIUtils.isEmtpy(act_homewwork_major)) {
+//                    showToast("专业不能为空！");
+//                    return;
+//                }
+//                if (UIUtils.isEmtpy(act_enrollment_year)) {
+//                    showToast("年级不能为空！");
+//                    return;
+//                }
+//
+//                if (UIUtils.isEmtpy(act_homewwork_subject)) {
+//                    showToast("科目不能为空！");
+//                    return;
+//                }
                 if (UIUtils.isEmtpy(act_homewwork_title)) {
                     showToast("标题不能为空！");
                     return;
@@ -113,22 +205,23 @@ public class ReleaseHomeworkActivity extends BaseActivity {
                     showToast("作业说明不能为空！");
                     return;
                 }
-                if (!Utils.contain(allMajor, act_homewwork_major.getText().toString().trim())) {
-                    showToast("专业格式输入有误！");
-                    return;
-                }
-                if (!Utils.contain(yearStr, act_enrollment_year.getText().toString().trim())) {
-                    showToast("年级格式输入有误！");
-                    return;
-                }
+//                if (!Utils.contain(allMajor, act_homewwork_major.getText().toString().trim())) {
+//                    showToast("专业格式输入有误！");
+//                    return;
+//                }
+//                if (!Utils.contain(yearStr, act_enrollment_year.getText().toString().trim())) {
+//                    showToast("年级格式输入有误！");
+//                    return;
+//                }
 
                 tv_release.setText("正在发布...");
-                teacherHomeWork.setEnrollment_year(act_enrollment_year.getText().toString().trim());
+               /* teacherHomeWork.setEnrollment_year(act_enrollment_year.getText().toString().trim());
+                teacherHomeWork.setMajor(act_homewwork_major.getText().toString().trim());
+                teacherHomeWork.setSubject(act_homewwork_subject.getText().toString().trim());*/
+
                 teacherHomeWork.setStu_number_list(new ArrayList<String>());
                 teacherHomeWork.setTitle(act_homewwork_title.getText().toString().trim());
-                teacherHomeWork.setMajor(act_homewwork_major.getText().toString().trim());
                 teacherHomeWork.setContent(act_homewwork_content.getText().toString());
-                teacherHomeWork.setSubject(act_homewwork_subject.getText().toString().trim());
                 String objectId = (String) SharePreferenceUtils.get(mCtx, Constants.OBJECTID, "");
                 if (objectId.equals("")) {
                     // showToast("您的账户已过期，请重新登录！")
@@ -186,7 +279,6 @@ public class ReleaseHomeworkActivity extends BaseActivity {
                 break;
         }
     }
-
 
     DialogInterface.OnKeyListener keylistener = new DialogInterface.OnKeyListener() {
         public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/smartrefreshlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!--<android.support.design.widget.CoordinatorLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp">-->
+        <!--&lt;!&ndash;图片名 title&ndash;&gt;-->
+        <!--&lt;!&ndash;<android.support.design.widget.CollapsingToolbarLayout&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/main.collapsing"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="200dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:fitsSystemWindows="true"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:contentScrim="?attr/colorPrimary"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:expandedTitleMarginEnd="64dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:expandedTitleMarginStart="48dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:layout_scrollFlags="scroll|exitUntilCollapsed">&ndash;&gt;-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@mipmap/default_pic"-->
+        <!--app:layout_scrollFlags="scroll|exitUntilCollapsed" />-->
+
+        <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--app:layout_collapseMode="pin"-->
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+        <!--/>-->
+        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
+
+        <!--</android.support.design.widget.AppBarLayout>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_homework"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="15dp"
+            android:background="@drawable/release_fab"
+            android:src="@mipmap/release" />
+        <!--</android.support.design.widget.CoordinatorLayout>-->
+
+    </RelativeLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -30,6 +30,18 @@ public class Utils {
         Log.d("测试", text);
     }
 
+    public static boolean isAccountNumber(String str) {
+        return SMSUtil.judgePhoneNums(str) || isSchoolNumber(str) || isTeacherNumber(str);
+    }
+
+    /**
+     * 判断是否是学号
+     */
+    public static boolean isTeacherNumber(String str) {
+
+        return str.length() == 5;
+    }
+
     /**
      * 判断是否是学号
      */

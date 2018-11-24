@@ -1,7 +1,6 @@
 package com.xyb.zhku.fragment.student;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.xyb.zhku.R;
@@ -33,9 +32,9 @@ public class StuMyFragment extends TeacherMyFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         String major = (String) SharePreferenceUtils.get(mCtx, Constants.MAJOR, "专业异常，建议重新登录");
-        String my_class = (String) SharePreferenceUtils.get(mCtx, Constants.UCLASS, "班级异常，建议重新登录");
+        int my_class = (int) SharePreferenceUtils.get(mCtx, Constants.UCLASS,-1);
         String enrollment_year = (String) SharePreferenceUtils.get(mCtx, Constants.ENROLLMENT_YEAR, "入学年份异常，建议重新登录");
-        tv_my_class.setText(my_class);
+        tv_my_class.setText(my_class+"班");
         tv_my_enrollment_year.setText(enrollment_year);
         tv_my_major.setText(major);
         tv_my_school_number_name.setText("学号");

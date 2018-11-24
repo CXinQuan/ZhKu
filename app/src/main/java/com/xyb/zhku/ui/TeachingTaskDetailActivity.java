@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -99,7 +98,10 @@ public class TeachingTaskDetailActivity extends BaseActivity {
         subjectClass = (TeachingTask.SubjectClass) getIntent.getSerializableExtra("subjectClass");
         task = (TeachingTask) getIntent.getSerializableExtra("TeachingTask");
         position = (int) getIntent.getSerializableExtra("position");
-
+        yearStr = Utils.getYearStr();
+        allMajor = Utils.getAllMajor(mCtx);
+        UIUtils.bindArray(actEnrollmentYear, yearStr);
+        UIUtils.bindArray(actMajor, allMajor);
         // TODO: 2018/10/22   初始化 View
         initCheckBox();
         tvHeadContent.setText("教学任务详情");
@@ -112,9 +114,9 @@ public class TeachingTaskDetailActivity extends BaseActivity {
         for (Integer classInt : classList) {
             checkBoxList_All.get(classInt - 1).setChecked(true);
         }
-        for (CheckBox checkBox : checkBoxList_All) {
-            observeCheckBox(checkBox);
-        }
+//        for (CheckBox checkBox : checkBoxList_All) {
+//            observeCheckBox(checkBox);
+//        }
         observeAutoCompleteTextView(actMajor);
         observeAutoCompleteTextView(actEnrollmentYear);
     }
@@ -141,8 +143,7 @@ public class TeachingTaskDetailActivity extends BaseActivity {
 //
 //                }
                 //  task.getList().remove(position);  // 先将原本的对象移除
-                yearStr = Utils.getYearStr();
-                allMajor = Utils.getAllMajor(mCtx);
+
                 if (UIUtils.isEmtpy(actMajor) || !Arrays.asList(allMajor).contains(actMajor.getText().toString())) {
                     showToast("专业输入有误");
                     return;
@@ -168,7 +169,7 @@ public class TeachingTaskDetailActivity extends BaseActivity {
                 }
                 isSubmiting = true;
                 // 一条 课程对应班级  的 对象
-              //  subjectClass1 = new TeachingTask.SubjectClass();
+                //  subjectClass1 = new TeachingTask.SubjectClass();
                 String major = actMajor.getText().toString().trim();
                 String subject = actSubject.getText().toString().trim();
                 String year = actEnrollmentYear.getText().toString().trim();
@@ -183,7 +184,7 @@ public class TeachingTaskDetailActivity extends BaseActivity {
                         classList.add(i + 1);
                     }
                 }
-               // subjectClass1.setClassList(classList);
+                // subjectClass1.setClassList(classList);
                 //   subjectClass.setSubject("");  课程没有改变
 //                subjectClass.setMajor(actMajor.getText().toString());
 //                subjectClass.setYear(actEnrollmentYear.getText().toString());
@@ -202,7 +203,7 @@ public class TeachingTaskDetailActivity extends BaseActivity {
                             TeachingTaskUpdateManager.getInstance().notifyChange(task);
                             btn_submit_changed.setVisibility(View.GONE);
                             showToast("保存成功");
-                           // TeachingTaskDetailActivity.this.subjectClass = subjectClass1;  //  如果 修改后 提交了，仍然想再修改，再提交
+                            // TeachingTaskDetailActivity.this.subjectClass = subjectClass1;  //  如果 修改后 提交了，仍然想再修改，再提交
                         } else {
                             showToast("服务器离家出走了");
                         }
@@ -233,6 +234,9 @@ public class TeachingTaskDetailActivity extends BaseActivity {
         checkBoxList_All.addAll(checkBoxList_First);
         checkBoxList_All.addAll(checkBoxList_Second);
         checkBoxList_All.addAll(checkBoxList_Third);
+        initCheckBox(checkBoxList_First, cbAllFirst);
+        initCheckBox(checkBoxList_Second, cbAllSecond);
+        initCheckBox(checkBoxList_Third, cbAllThird);
     }
 
     /**
@@ -242,12 +246,10 @@ public class TeachingTaskDetailActivity extends BaseActivity {
         acTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -261,17 +263,113 @@ public class TeachingTaskDetailActivity extends BaseActivity {
      * 监听 CheckBox
      */
     private void observeCheckBox(CheckBox checkBox) {
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                btn_submit_changed.setVisibility(View.VISIBLE);
-            }
-        });
+//        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//            }
+//        });
     }
 
     @Override
     public int setContentViewLayout() {
         return R.layout.activity_teaching_task_detail;
     }
+
+    private void initCheckBox(final List<CheckBox> checkBoxList, final CheckBox checkBoxAll) {
+        //    boolean isChild;// 是否是子CheckBox产生的检查
+//子CheckBox响应全选的CheckBox时 有bug
+//       // 初始化 各个 子的 ChechBox
+//        for (CheckBox checkBox : checkBoxList) { //  checkBoxList_First
+//            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    boolean isAllSelect = true; // 假设全部都已经被选中了
+//                    for (CheckBox checkBox : checkBoxList) { // checkBoxList_First
+//                        if (!checkBox.isChecked()) { // 只要有一个没被选中 ，就说明 不是全部被选中，如果遍历完之后还没有找到  没选中的那么就设置为true了
+//                            isAllSelect = false;
+//                            break;
+//                        }
+//                    }
+//                    checkBoxAll.setChecked(isAllSelect); //cb_all_first
+//                }
+//            });
+//        }
+
+
+        //<editor-fold desc="修改前">
+        //        // 初始化 全选的 CheckBox
+//        checkBoxAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    for (CheckBox checkBox : checkBoxList) {
+//                        checkBox.setChecked(true);
+//                    }
+//                } else {
+//
+//                    for (CheckBox checkBox : checkBoxList) {
+//                        checkBox.setChecked(false);
+//                    }
+//                }
+//            }
+//        });
+        //</editor-fold>
+
+        //<editor-fold desc="修改后">
+        for (final CheckBox checkBox : checkBoxList) { //  checkBoxList_First
+           checkBox.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View v) {
+                                               if(checkBox.isChecked()){
+                                                   checkBox.setChecked(true);
+                                               }else{
+                                                   checkBox.setChecked(false);
+                                               }
+                                               boolean isAllSelect = true; // 假设全部都已经被选中了
+                                               btn_submit_changed.setVisibility(View.VISIBLE);
+                                               for (CheckBox checkBox : checkBoxList) { // checkBoxList_First
+                                                   if (!checkBox.isChecked()) { // 只要有一个没被选中 ，就说明 不是全部被选中，如果遍历完之后还没有找到  没选中的那么就设置为true了
+                                                       isAllSelect = false;
+                                                       break;
+                                                   }
+                                               }
+                                               checkBoxAll.setChecked(isAllSelect); //cb_all_first
+                                           }
+                                       });
+//                   new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    boolean isAllSelect = true; // 假设全部都已经被选中了
+//                    btn_submit_changed.setVisibility(View.VISIBLE);
+//            for (CheckBox checkBox : checkBoxList) { // checkBoxList_First
+//                        if (!checkBox.isChecked()) { // 只要有一个没被选中 ，就说明 不是全部被选中，如果遍历完之后还没有找到  没选中的那么就设置为true了
+//                            isAllSelect = false;
+//                            break;
+//                        }
+//                    }
+//                    checkBoxAll.setChecked(isAllSelect); //cb_all_first
+//                }
+//            });
+        }
+        checkBoxAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            //    Log.d("测试","setOnClickListener被执行");
+                if (checkBoxAll.isChecked()) {
+                    checkBoxAll.setChecked(true);
+                    for (CheckBox checkBox : checkBoxList) {
+                        checkBox.setChecked(true);
+                    }
+                } else {
+                    checkBoxAll.setChecked(false);
+                    for (CheckBox checkBox : checkBoxList) {
+                        checkBox.setChecked(false);
+                    }
+                }
+            }
+        });
+        //</editor-fold>
+    }
+
 
 }
