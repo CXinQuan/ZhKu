@@ -107,6 +107,7 @@ public class LoginActivity extends BaseActivity {
                 query.setLimit(1);
                 //执行查询方法
                 query.findObjects(new FindListener<User>() {
+                    @Override
                     public void done(List<User> object, BmobException e) {
                         if (e == null) {  //查询 有与没有 e都为空，但是object的长度就不一定了
                             if (object.size() == 1) {

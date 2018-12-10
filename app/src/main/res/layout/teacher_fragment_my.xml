@@ -10,6 +10,35 @@
 
         <include layout="@layout/fragment_my_base_view" />
 
+        <RelativeLayout
+            android:id="@+id/rl_email"
+            style="@style/MyRelativeLayout">
+
+            <TextView
+                style="@style/TextView_My_Left"
+                android:drawableLeft="@mipmap/email"
+                android:text="邮箱" />
+
+            <TextView
+                android:id="@+id/tv_my_email"
+                style="@style/TextView_My_Right"
+                android:layout_alignParentRight="false"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/iv_email"
+                android:text="16***5417@qq.com"
+                />
+
+            <ImageView
+                android:id="@+id/iv_email"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/right02" />
+        </RelativeLayout>
+
+        <View style="@style/View_my" />
+
         <Button
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"

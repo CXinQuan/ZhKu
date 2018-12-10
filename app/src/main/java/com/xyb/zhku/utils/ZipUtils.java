@@ -32,7 +32,7 @@ public class ZipUtils {
         if (source.exists()) {
             // 压缩文件名=源文件名.zip
             String zipName = source.getName() + ".zip";
-            target = new File(source.getParent(), zipName);
+            target = new File(source.getParent(), zipName); // 压缩后的target文件，放在
             if (target.exists()) {// 如果存在该压缩文件，则删除
                 target.delete();
             }
@@ -89,7 +89,6 @@ public class ZipUtils {
             if (listener != null) {   // 传一个监听给外界，告诉外界自己已经压缩完成了
                 listener.onfinish(target);
             }
-
 
         } else {
             FileInputStream fis = null;

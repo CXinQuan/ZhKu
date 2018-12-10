@@ -1,5 +1,6 @@
 package com.xyb.zhku.fragment.manager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,7 @@ import butterknife.BindView;
 /**
  * Created by lenovo on 2018/10/16.
  */
-
+@SuppressLint("ValidFragment")
 public class ManagerReleaseFragment extends BaseFragment {
     @BindView(R.id.manager_tablayout)
     TabLayout manager_tablayout;
@@ -27,6 +28,8 @@ public class ManagerReleaseFragment extends BaseFragment {
 
     int identify;
 
+
+
     public ManagerReleaseFragment() {
     }
 
@@ -34,6 +37,7 @@ public class ManagerReleaseFragment extends BaseFragment {
         this.identify = identify;
     }
 
+    @Override
     protected int setView() {
         return R.layout.manager_release_fragment;
     }

@@ -33,6 +33,9 @@ public class SharePreferenceUtils {
             put(context, Constants.OBJECTID, user.getObjectId());
             put(context, Constants.ENROLLMENT_YEAR, user.getEnrollment_year() != null ? user.getEnrollment_year() : "");
             put(context, Constants.MAJOR, user.getMajor() != null ? user.getMajor() : "");
+
+            put(context, Constants.EMAIL, user.getEmail() != null ? user.getEmail() : "");
+
             put(context, Constants.UCLASS, user.getClassNumber() != -1 ? user.getClassNumber() : -1);
             put(context, Constants.COLLEGE, user.getCollege() != null ? user.getCollege() : "");
         }

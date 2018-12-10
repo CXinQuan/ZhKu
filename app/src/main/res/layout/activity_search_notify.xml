@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="忽略最近条目" />
+                android:text="忽略条目" />
 
             <Spinner
                 android:id="@+id/sp_skip"
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="只查最近条目" />
+                android:text="只查条目" />
 
             <Spinner
                 android:id="@+id/sp_limit"
@@ -130,7 +130,11 @@
             <Spinner
                 android:id="@+id/sp_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+
+                />
+            <!--android:background="#550000"-->
+
         </LinearLayout>
 
         <LinearLayout

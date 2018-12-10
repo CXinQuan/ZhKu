@@ -37,7 +37,8 @@
         <!-- </intent-filter> -->
         <!-- </activity> -->
 
-        <activity android:name=".ui.SplashActivity">  //.ui.SplashActivity
+        <activity android:name=".ui.SplashActivity">
+            //.ui.SplashActivity
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,7 +59,8 @@
         <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.ManagerSearchTeachingTaskActivity" />
         <activity android:name=".ui.TeachingTaskListActivity" />
-        <activity android:name=".ui.TeachingTaskDetailActivity"></activity>
+        <activity android:name=".ui.TeachingTaskDetailActivity" />
+        <activity android:name=".ui.EmailChangeActivity"></activity>
     </application>
 
 </manifest>

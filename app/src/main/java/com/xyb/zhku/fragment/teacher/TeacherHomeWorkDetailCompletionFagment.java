@@ -23,7 +23,10 @@ import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseFragment;
 import com.xyb.zhku.bean.StudentHomeWork;
 import com.xyb.zhku.bean.TeacherHomeWork;
+import com.xyb.zhku.email.SendMailUtil;
+import com.xyb.zhku.global.Constants;
 import com.xyb.zhku.ui.StuHomeworkFileActivity;
+import com.xyb.zhku.utils.SharePreferenceUtils;
 import com.xyb.zhku.utils.Utils;
 import com.xyb.zhku.utils.ZipUtils;
 
@@ -88,6 +91,11 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
     TextView tv_has_not_stu;
     @BindView(R.id.progressbar)
     ProgressBar progressbar;
+
+    @BindView(R.id.tv_one_button_EmailReceive)
+    TextView tv_one_button_EmailReceive;
+    @BindView(R.id.progressbar_sendToEmail)
+    ProgressBar progressbar_sendToEmail;
 
 
     @BindView(R.id.tv_one_button_download)
@@ -243,7 +251,7 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
      *
      * @param view
      */
-    @OnClick({R.id.ll_school_number, R.id.ll_state, R.id.ll_grade, R.id.tv_one_button_download})
+    @OnClick({R.id.ll_school_number, R.id.ll_state, R.id.ll_grade, R.id.tv_one_button_download, R.id.tv_one_button_EmailReceive})
     public void OnClick(View view) {
         iv_grade.setVisibility(View.INVISIBLE);
         iv_state.setVisibility(View.INVISIBLE);
@@ -339,20 +347,57 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                 break;
 
             case R.id.tv_one_button_download:
-                if (homeWork.getStu_number_list().size() <= 0) {
-                    showToast("还没学生提交呢，无法下载");
-                    return;
-                }
+//                if (homeWork.getStu_number_list().size() <= 0) {
+//                    showToast("还没学生提交呢，无法下载");
+//                    return;
+//                }
+//                progressbar.setVisibility(View.VISIBLE);
+//                tv_one_button_download.setVisibility(View.GONE);
+//                // TODO: 2018/10/27   一键下载
+//                for (int i = 0; i < lists.size(); i++) {
+//                    downloadFile(lists.get(i), homeWork.getTitle(), i == lists.size() - 1);
+//                }
+                state = STATEDOWNLOADFILE;
+                downloadOrEmailReceive();
 
-                progressbar.setVisibility(View.VISIBLE);
-                tv_one_button_download.setVisibility(View.GONE);
-                // TODO: 2018/10/27   一键下载
-                for (int i = 0; i < lists.size(); i++) {
-                    downloadFile(lists.get(i), homeWork.getTitle(), i == lists.size() - 1);
-                }
+                break;
+            case R.id.tv_one_button_EmailReceive:
+                state = STATEEMAILRECEVIE;
+                downloadOrEmailReceive();
+                break;
+            default:
                 break;
         }
     }
+
+    /**
+     * 状态 ：下载全部学生的作业文件 或者 是 转发邮箱接收
+     */
+    private static final int STATEDOWNLOADFILE = 0;
+    private static final int STATEEMAILRECEVIE = 1;
+    private int state = STATEDOWNLOADFILE;
+
+    /**
+     * 下载文件 或者 是 转发邮箱接收
+     */
+    private void downloadOrEmailReceive() {
+        if (homeWork.getStu_number_list().size() <= 0) {
+            showToast("还没学生提交呢，无法下载");
+            return;
+        }
+        // TODO: 2018/10/27   一键下载
+        if (state == STATEDOWNLOADFILE) {
+            progressbar.setVisibility(View.VISIBLE);
+            tv_one_button_download.setVisibility(View.GONE);
+        } else if (state == STATEEMAILRECEVIE) {
+            progressbar_sendToEmail.setVisibility(View.VISIBLE);
+            tv_one_button_EmailReceive.setVisibility(View.GONE);
+        }
+        for (int i = 0; i < lists.size(); i++) {
+            downloadFile(lists.get(i), homeWork.getTitle(), i == lists.size() - 1);
+        }
+    }
+
 
     /**
      * 使用okHttp 下载文件
@@ -365,14 +410,10 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
         }
         final BmobFile bmobFile = studentHomeWork.getFile();
 
-
         Log.d("文件", bmobFile.getFilename() + bmobFile.getUrl());
 
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .get()
-                .url(bmobFile.getUrl())
-                .build();
+        Request request = new Request.Builder().get().url(bmobFile.getUrl()).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -382,12 +423,19 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                         //  tv_download_file.setVisibility(View.VISIBLE); // 下载附件 不可见
                         //   pb_file_download.setVisibility(View.GONE);// 进度圆圈  可见
                         showToast("服务器繁忙");
-                        progressbar.setVisibility(View.GONE);
-                        tv_one_button_download.setVisibility(View.VISIBLE);
+                        if (state == STATEDOWNLOADFILE) {
+                            progressbar.setVisibility(View.GONE);
+                            tv_one_button_download.setVisibility(View.VISIBLE);
+                        } else if (state == STATEEMAILRECEVIE) {
+                            progressbar_sendToEmail.setVisibility(View.GONE);
+                            tv_one_button_EmailReceive.setVisibility(View.VISIBLE);
+                        }
+
                     }
                 });
             }
 
+            @Override
             public void onResponse(Call call, Response response) throws IOException {
                 //拿到字节流
                 InputStream is = response.body().byteStream();
@@ -404,12 +452,13 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                 final File pathFile = new File(pathDownLoadFile + File.separator + teacherHomeWorkTitle);
                 if (!pathFile.exists()) {
                     pathFile.mkdir();
-                }                                     // 201510214103_电子信息工程151_陈鑫权
+                }
 //                if (bmobFile.getFilename().endsWith("")) {
 //
 //                }
                 String endName = getEndName(bmobFile.getFilename());
 
+                // 201510214103_电子信息工程151_陈鑫权
                 final File file = new File(pathFile, studentHomeWork.getStu_school_number() + "_" + studentHomeWork.getStu_major() + studentHomeWork.getEnrollment_year().substring(studentHomeWork.getEnrollment_year().toString().length() - 2) + studentHomeWork.getStu_class() + "_" + studentHomeWork.getStu_name() + endName); // bmobFile.getFilename()
                 if (file.exists()) {
                     file.delete();
@@ -423,7 +472,6 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                 //关闭流
                 fos.close();
                 is.close();
-
 //                getActivity().runOnUiThread(new Runnable() {
 //                    @Override
 //                    public void run() {
@@ -441,13 +489,13 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                     //  开始 压缩，并获取其 结束 监听
                     ZipUtils.zip(pathFile.getAbsolutePath(), new ZipUtils.FinishListener() {
                         @Override
-                        public void onfinish(final File target) {
+                        public void onfinish(final File target) {  //target 是压缩后的文件
                             // TODO: 2018/10/27  压缩结束 ，删除该原文件夹   隐藏该ProgressBar
                             Utils.showLog("压缩完成");
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    showToast("下载完成");
+                                    // showToast("下载完成");
 //                                    Snackbar.make(tv_one_button_download, "下载完成", Snackbar.LENGTH_LONG)
 //                                            .setAction("打开", new View.OnClickListener() {
 //                                                @Override
@@ -483,8 +531,24 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
 //
 //                                                }
 //                                            }).show();
-                                    progressbar.setVisibility(View.GONE);
-                                    tv_one_button_download.setVisibility(View.VISIBLE);
+                                    if (state == STATEDOWNLOADFILE) {
+                                        progressbar.setVisibility(View.GONE);
+                                        tv_one_button_download.setVisibility(View.VISIBLE);
+                                    } else if (state == STATEEMAILRECEVIE) {
+                                        progressbar_sendToEmail.setVisibility(View.GONE);
+                                        tv_one_button_EmailReceive.setVisibility(View.VISIBLE);
+                                        // TODO: 2018/12/9 将文件转发到邮箱，sharedPreference中动态获取教师的邮箱地址，在注册时需要添加邮箱的绑定，邮箱的正则判断
+                                        if (target != null && target.isFile()) {
+                                            String toAdd = (String) SharePreferenceUtils.get(mCtx, Constants.EMAIL, "");
+                                            //  String toAdd = "1611205417@qq.com";
+                                            if ("".equals(toAdd)) {
+                                                showToast("邮箱异常，建议重新登录");
+                                                return;
+                                            }
+                                            String subject = "易仲恺学生作业接收通知";
+                                            SendMailUtil.send(target, toAdd, subject, target.getName());
+                                        }
+                                    }
                                 }
                             });
                         }
@@ -494,10 +558,14 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
         });
     }
 
+    /***
+     *   得到文件的后缀名  如： .doc  .pdf  .xml
+     * @param fileName
+     * @return
+     */
     private String getEndName(String fileName) {
         return fileName.substring(fileName.lastIndexOf("."));
     }
-
 
     /**
      * 处理某一项已经改变
@@ -580,6 +648,7 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
      * 按学号排序
      */
     class Sch_numberSort implements Comparator<StudentHomeWork> {
+        @Override
         public int compare(StudentHomeWork o1, StudentHomeWork o2) {
             return (int) (Long.parseLong(o1.getStu_school_number()) - Long.parseLong(o2.getStu_school_number()));
         }

@@ -20,6 +20,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:src="@mipmap/back" />
+
         <TextView
             android:id="@+id/head_text"
             android:layout_width="wrap_content"
@@ -87,6 +88,21 @@
                     android:id="@+id/et_reg_school_number"
                     style="@style/Reg_AutoCompleteTextView"
                     android:hint="请输入学号" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/Reg_LinearLayout"
+                android:id="@+id/ll_email"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_reg_email"
+                    style="@style/Reg_TextView"
+                    android:text="邮箱" />
+
+                <EditText
+                    android:id="@+id/et_reg_email"
+                    style="@style/Reg_AutoCompleteTextView"
+                    android:hint="请输入邮箱" />
             </LinearLayout>
 
             <LinearLayout style="@style/Reg_LinearLayout">
@@ -160,10 +176,10 @@
                 android:id="@+id/btn_regiest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="150dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="100dp"
-                android:layout_marginBottom="150dp"
                 android:background="@drawable/login_btn_bg"
                 android:text="注册"
                 android:textColor="#ffffff" />

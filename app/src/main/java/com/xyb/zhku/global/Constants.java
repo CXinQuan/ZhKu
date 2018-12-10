@@ -16,6 +16,7 @@ public class Constants {
     public static String COLLEGE = "college";
     public static String ENROLLMENT_YEAR = "enrollment_year";
     public static String MAJOR = "major";
+    public static String EMAIL = "email";
     public static String UCLASS = "uClass";
     public static final String OBJECTID="objectid";
 

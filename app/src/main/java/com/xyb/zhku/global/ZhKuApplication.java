@@ -82,8 +82,9 @@ public class ZhKuApplication extends Application {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace(System.err);
         }
-        if (info == null)
+        if (info == null) {
             info = new PackageInfo();
+        }
         return "App版本信息:" + info.versionName + '_' + info.versionCode;// app版本信息
     }
 

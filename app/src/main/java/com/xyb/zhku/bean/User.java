@@ -19,6 +19,10 @@ public class User extends BmobObject {
      */
     String phone;
     /**
+     *   邮箱号
+     */
+    String email;
+    /**
      * 密码
      */
     String password;
@@ -50,7 +54,13 @@ public class User extends BmobObject {
      * 班级
      */
     int classNumber;
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public int getClassNumber() {
         return classNumber;
     }

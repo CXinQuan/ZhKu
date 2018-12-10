@@ -17,12 +17,14 @@ import android.widget.TextView;
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.bean.User;
+import com.xyb.zhku.utils.EmailUtil;
 import com.xyb.zhku.utils.MD5Util;
 import com.xyb.zhku.utils.SMSUtil;
 import com.xyb.zhku.utils.SharePreferenceUtils;
 import com.xyb.zhku.utils.UIUtils;
 import com.xyb.zhku.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -79,6 +81,12 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.tv_reg_school_number)
     TextView tv_reg_school_number;
 
+    @BindView(R.id.ll_email)
+    LinearLayout ll_email;
+    @BindView(R.id.et_reg_email)
+    EditText et_reg_email;
+
+
     private static final int KEEP_TIME_MIN = 100;
     private static final int RESET_TIME = 101;
     //发送验证码成功
@@ -97,6 +105,7 @@ public class RegisterActivity extends BaseActivity {
     boolean isSubmiting_toMob = false;
     boolean isSubmiting_toBMob = false;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -115,12 +124,14 @@ public class RegisterActivity extends BaseActivity {
                 if (isChecked) {
                     ll_reg_class.setVisibility(View.VISIBLE);
                     ll_reg_major.setVisibility(View.VISIBLE);
+                    ll_email.setVisibility(View.GONE);
                     ll_reg_enrollment_year.setVisibility(View.VISIBLE);
                     tv_reg_school_number.setText("学号");
                 } else {
                     ll_reg_class.setVisibility(View.GONE);
                     ll_reg_major.setVisibility(View.GONE);
                     ll_reg_enrollment_year.setVisibility(View.GONE);
+                    ll_email.setVisibility(View.VISIBLE);
                     tv_reg_school_number.setText("工号");
                 }
             }
@@ -144,6 +155,7 @@ public class RegisterActivity extends BaseActivity {
         autoCompleteTextView.setAdapter(adapter);     // 绑定adapter
     }
 
+    @Override
     public int setContentViewLayout() {
         return R.layout.activity_register;
     }
@@ -224,7 +236,15 @@ public class RegisterActivity extends BaseActivity {
                         return;
                     }
                 } else {
-                    // TODO: 2018/9/22   老师的逻辑处理
+                    // TODO: 2018/9/22   老师的逻辑处理，添加邮箱的 正则表达式 判断
+                    if (UIUtils.isEmtpy(et_reg_email)) {
+                        showToast("请输入邮箱");
+                        return;
+                    }
+                    if (!EmailUtil.isEmail(et_reg_email.getText().toString().trim())) {
+                        showToast("请输入正确的邮箱地址");
+                        return;
+                    }
                 }
                 if (!contain(allCollege, act_reg_college.getText().toString().trim())) {
                     showSnackBar(act_reg_college, "学院输入格式有误！");
@@ -239,6 +259,8 @@ public class RegisterActivity extends BaseActivity {
                     isSubmiting_toMob = true;
                     submitCode("86", et_reg_phone.getText().toString().trim(), et_reg_yzm.getText().toString());
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -299,13 +321,26 @@ public class RegisterActivity extends BaseActivity {
     private void addUserToBmob() {
         BmobQuery<User> query = new BmobQuery<User>();
         //查询条件
-        query.addWhereEqualTo("phone", et_reg_phone.getText().toString().trim());
+        //query.addWhereEqualTo("phone", et_reg_phone.getText().toString().trim());
+
+        // 只要电话或者学号（工号） 是已经存在的，那么，就说明该用户已经存在
+        BmobQuery<User> queryPhone = new BmobQuery<User>();
+        BmobQuery<User> querySchoolNumber = new BmobQuery<User>();
+        queryPhone.addWhereEqualTo("phone",et_reg_phone.getText().toString().trim());
+        querySchoolNumber.addWhereEqualTo("school_number", et_reg_school_number.getText().toString().trim());
+        List<BmobQuery<User>> accountNumber = new ArrayList<BmobQuery<User>>();
+        accountNumber.add(queryPhone);
+        accountNumber.add(querySchoolNumber);
+        query.or(accountNumber);
+
         query.setLimit(1);
         query.findObjects(new FindListener<User>() {
+            @Override
             public void done(List<User> object, BmobException e) {
                 if (e == null) {
                     if (object.size() == 1) {
                         showToast("该用户已经存在");
+                        btn_regiest.setText("注册");
                     } else {
                         //  如果该用户不存在就向服务器插入一条记录
                         final User user = new User();
@@ -317,6 +352,7 @@ public class RegisterActivity extends BaseActivity {
                             user.setClassNumber(Integer.parseInt(act_reg_class.getText().toString().trim()));
                         } else {
                             user.setIdentity(User.TEACHER);
+                            user.setEmail(et_reg_email.getText().toString().trim());
                         }
                         user.setCollege(act_reg_college.getText().toString().trim());
                         user.setSchool_number(et_reg_school_number.getText().toString().trim());
