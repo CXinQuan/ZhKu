@@ -100,7 +100,6 @@ public class LoginActivity extends BaseActivity {
                 List<BmobQuery<User>> accountNumber = new ArrayList<BmobQuery<User>>();
                 accountNumber.add(queryPhone);
                 accountNumber.add(querySchoolNumber);
-
                 query.or(accountNumber);
                 query.addWhereEqualTo("password", MD5Util.encrypt(mEtUserPassword.getText().toString().trim()));
                 //返回1条数据，如果不加上这条语句，默认返回10条数据
@@ -114,16 +113,15 @@ public class LoginActivity extends BaseActivity {
                                 Log.d("该用户存在", "该用户存在");
                                 User user = object.get(0);
                                 if (user != null) {
-                                    // TODO: 2018/9/22    保存用户信息
+                                    //保存用户信息
                                     SharePreferenceUtils.saveUser(mCtx, user);
                                 }
-
-                                // TODO: 2018/9/22    判断是老师的主页 还是 学生的主页
 //                                if (user.getIdentity() == User.STUDENT) {
 //                                   // jumpToAnotherActivity(StuMainActivity.class_icon);
 //                                }else{
 //                                    jumpToAnotherActivity(MainActivity.class_icon);
 //                                }
+                                // 直接跳转到主页，再由主页判断是老师的主页 还是 学生的主页
                                 int identify = user.getIdentity();
                                 if (identify != -1) {
                                     Intent intent = new Intent(mCtx, MainActivity.class);
@@ -144,6 +142,7 @@ public class LoginActivity extends BaseActivity {
                     }
                 });
                 break;
+            default:break;
         }
     }
 

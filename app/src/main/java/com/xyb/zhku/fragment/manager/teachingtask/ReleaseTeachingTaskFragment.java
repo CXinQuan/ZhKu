@@ -20,6 +20,7 @@ import android.widget.Spinner;
 
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseFragment;
+import com.xyb.zhku.base.MyBaseAdapter;
 import com.xyb.zhku.bean.TeachingTask;
 import com.xyb.zhku.bean.User;
 import com.xyb.zhku.ui.ManagerSearchTeachingTaskActivity;
@@ -195,8 +196,10 @@ public class ReleaseTeachingTaskFragment extends BaseFragment {
         // 测试 Spinner
 
         // TODO: 2018/10/26     改变初始化代码  年级已经改为 Spinner
-        UIUtils.bindSpinnerAdapter(Sp_enrollment_year, yearStr);
+       // UIUtils.bindSpinnerAdapter(Sp_enrollment_year, yearStr);
         UIUtils.bindArray(actMajor, allMajor);
+        Sp_enrollment_year.setAdapter(new MyBaseAdapter(yearStr));
+
 
         Sp_enrollment_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 

@@ -56,7 +56,26 @@
         </RelativeLayout>
 
         <View style="@style/View_my" />
+        <RelativeLayout
+            android:id="@+id/rl_changed_psw"
+            style="@style/MyRelativeLayout">
 
+            <TextView
+                style="@style/TextView_My_Left"
+                android:drawableLeft="@mipmap/lock_blue"
+                android:text="修改密码" />
+
+
+            <ImageView
+                android:id="@+id/iv_changed_psw"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/right02" />
+        </RelativeLayout>
+
+        <View style="@style/View_my" />
 
         <Button
             android:id="@+id/btn_logout"

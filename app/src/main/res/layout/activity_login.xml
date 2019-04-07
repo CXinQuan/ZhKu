@@ -133,6 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="新用户注册"
+                android:visibility="gone"
                 android:textColor="#ffffff" />
 
             <TextView

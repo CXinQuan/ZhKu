@@ -98,8 +98,8 @@ public abstract class BaseNotifyFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(3000);//延迟3000毫秒后结束刷新  相当于 网络请求超时时间为3秒
-                //  getNotifyData(0);
-                refreshNotifyData();
+                  getNotifyData(0);
+               // refreshNotifyData();
             }
 
             @Override

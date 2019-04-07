@@ -193,8 +193,8 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                         tv_has_not_stu.setVisibility(View.GONE);
                         lists.addAll(object);
                         updateStatistics(lists);
-                        Collections.sort(lists, new Sch_numberSort());
-                        adapter.notifyDataSetChanged();
+                        Collections.sort(lists, new Sch_numberSort());// 默认按学生学号排序
+                        adapter.notifyDataSetChanged();// 更新学生作业显示
                     }
                 } else {
                     showToast("服务器繁忙！");
@@ -277,16 +277,12 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
 //                    iv_school_number.setImageResource(R.mipmap.up_s);
 //                    laststate = SCHOOL_NUMBER_UP;
 //                    Utils.showLog("学号升序操作");
-//
-//                    // TODO: 2018/9/26   学号升序操作
-//
-//
 //                }
                 else {   //  最后一次不是  按 学号排序，那么就  默认 按  学号 升序 排序
                     iv_school_number.setImageResource(R.mipmap.up_s);
                     laststate = SCHOOL_NUMBER_UP;
                     Utils.showLog("学号升序操作");
-                    // TOD 2018/9/26   学号升序操作
+                    //  学号升序操作
                     Collections.sort(lists, new Sch_numberSort());
                     adapter.notifyDataSetChanged();
                 }
@@ -309,9 +305,6 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
 //                    iv_state.setImageResource(R.mipmap.up_s);
 //                    Utils.showLog("状态升序操作");
 //                    laststate = STATE_UP;
-//                    // TODO: 2018/9/26   状态升序操作
-//
-//
 //                }
                 else {   //  最后一次不是  按 状态排序，那么就  默认 按 状态 升序 排序
                     iv_state.setImageResource(R.mipmap.up_s);
@@ -331,7 +324,7 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                     iv_grade.setImageResource(R.mipmap.up_s);
                     Utils.showLog("成绩升序操作");
                     laststate = GRADE_UP;
-                    // TOD 2018/9/26   成绩升序操作
+                    //  成绩升序操作
                     Collections.reverse(lists);
                     adapter.notifyDataSetChanged();
 
@@ -353,7 +346,7 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
 //                }
 //                progressbar.setVisibility(View.VISIBLE);
 //                tv_one_button_download.setVisibility(View.GONE);
-//                // TODO: 2018/10/27   一键下载
+//                //   一键下载
 //                for (int i = 0; i < lists.size(); i++) {
 //                    downloadFile(lists.get(i), homeWork.getTitle(), i == lists.size() - 1);
 //                }

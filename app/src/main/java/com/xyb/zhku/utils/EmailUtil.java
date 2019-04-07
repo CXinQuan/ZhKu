@@ -24,7 +24,7 @@ public class EmailUtil {
 
             Pattern p = Pattern.compile(strPattern);
             Matcher m = p.matcher(email);
-            boolean matches = m.matches();
+           // boolean matches = m.matches();
             return m.matches();
 
             //return email.matches(strPattern);

@@ -57,7 +57,6 @@ public class TeacherHomeFragment extends BaseFragment {
         //解决 设置 viewPager.setOffscreenPageLimit(3) 时报错
         //因为这里是fragment嵌套，不能使用 getSupportFragmentManager,应使用getChildFragmentManager()
         viewPager.setAdapter(new MyViewPageAdapter(getChildFragmentManager()));
-
         viewPager.setOffscreenPageLimit(3); //默认只能缓存1个页面，所以这里设置缓存3个，当滑到第4个页面的时候，第1个页码就不会被销毁了
         //使 滑动的时候不会 重新 创建 Fragment
         tablayout.setupWithViewPager(viewPager);

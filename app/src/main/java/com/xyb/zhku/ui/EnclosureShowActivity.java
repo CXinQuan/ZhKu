@@ -1,16 +1,13 @@
 package com.xyb.zhku.ui;
 
-import android.annotation.TargetApi;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -25,8 +22,6 @@ import com.xyb.zhku.base.BaseActivity;
 import com.xyb.zhku.global.Constants;
 import com.xyb.zhku.utils.FileUtil;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,8 +30,6 @@ import java.io.InputStream;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.DownloadFileListener;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -210,6 +203,8 @@ public class EnclosureShowActivity extends BaseActivity {
                             }
                         })
                         .setNegativeButton("取消", null).create().show();
+                break;
+            default:
                 break;
         }
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,8 +97,8 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(3000);//延迟3000毫秒后结束刷新
-                // getNotifyData(0);
-                refreshNotifyData();
+                 getNotifyData(0);
+               // refreshNotifyData();
             }
 
             @Override
@@ -176,6 +177,8 @@ public abstract class BaseStuNotifyFragment extends BaseFragment {
         if (lists.size() <= 0) {   // 网络错误，之前没有获取到数据，现在有网络了，刷新，则先是
             getNotifyData(0);
         } else {
+            String time=lists.get(0).getCreatedAt();
+            Log.d("时间",time);
             BmobQuery<StuNotify> query = new BmobQuery<StuNotify>();
             query.order("-createdAt") //  createdAt 时间  从上到下  开始  返回  10条数据
                     .setLimit(10)

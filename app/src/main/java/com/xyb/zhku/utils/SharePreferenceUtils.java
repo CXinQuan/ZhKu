@@ -41,6 +41,22 @@ public class SharePreferenceUtils {
         }
     }
 
+    public static  User getUser(Context context){
+        User user=new User();
+        user.setEmail((String) get(context,Constants.EMAIL,""));
+        user.setEnrollment_year((String) get(context,Constants.ENROLLMENT_YEAR,""));
+        user.setSchool_number((String) get(context,Constants.SCHOOL_NUMBER,""));
+        user.setName((String) get(context,Constants.NAME,""));
+        user.setClassNumber((int) get(context,Constants.UCLASS,-1));
+        user.setCollege((String) get(context,Constants.COLLEGE,""));
+        user.setIdentity((int) get(context,Constants.IDENTITY,0));
+        user.setMajor((String) get(context,Constants.MAJOR,""));
+        user.setObjectId((String) get(context,Constants.OBJECTID,""));
+        user.setPhone((String) get(context,Constants.PHONE,""));
+        return user;
+    }
+
+
     /**
      * 清空用户信息
      */

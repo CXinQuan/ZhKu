@@ -344,43 +344,43 @@ public class RegisterActivity extends BaseActivity {
                     } else {
                         //  如果该用户不存在就向服务器插入一条记录
                         final User user = new User();
-                        // TODO: 2018/9/21   获取用户信息
-                        if (rb_reg_student.isChecked()) {
-                            user.setIdentity(User.STUDENT);
-                            user.setEnrollment_year(act_reg_enrollment_year.getText().toString().trim());
-                            user.setMajor(act_reg_major.getText().toString().trim());
-                            user.setClassNumber(Integer.parseInt(act_reg_class.getText().toString().trim()));
-                        } else {
-                            user.setIdentity(User.TEACHER);
-                            user.setEmail(et_reg_email.getText().toString().trim());
-                        }
-                        user.setCollege(act_reg_college.getText().toString().trim());
-                        user.setSchool_number(et_reg_school_number.getText().toString().trim());
-                        user.setPhone(et_reg_phone.getText().toString().trim());
-                        user.setName(et_reg_name.getText().toString().trim());
-                        user.setPassword(MD5Util.encrypt(et_reg_passsword.getText().toString().trim()));
-                        user.save(new SaveListener<String>() {
-                            @Override
-                            public void done(String objectId, BmobException e) {
-                                if (e == null) {
-                                    showToast("成功注册账户" + objectId);
-                                    Log("添加数据成功，返回objectId为：", objectId);
-                                    // TODO: 2018/9/22    跳转页面 并保存用户信息
-                                    SharePreferenceUtils.saveUser(mCtx, user);
-                                    btn_regiest.setText("注册");
-                                    isSubmiting_toBMob = false;
-                                    //  2018/9/22   MainActivity会自行 判断是老师的主页 还是 学生的主页
-                                    jumpToAnotherActivity(MainActivity.class);
-                                    finish();
-                                } else {
-                                    showToast("服务器繁忙，创建失败!");
-                                    Log("创建数据失败：", e.getMessage());
-                                    btn_regiest.setText("注册");
-                                    isSubmiting_toBMob = false;
-                                }
-                            }
-                        });
+                    // TODO: 2018/9/21   获取用户信息
+                    if (rb_reg_student.isChecked()) {
+                        user.setIdentity(User.STUDENT);
+                        user.setEnrollment_year(act_reg_enrollment_year.getText().toString().trim());
+                        user.setMajor(act_reg_major.getText().toString().trim());
+                        user.setClassNumber(Integer.parseInt(act_reg_class.getText().toString().trim()));
+                    } else {
+                        user.setIdentity(User.TEACHER);
+                        user.setEmail(et_reg_email.getText().toString().trim());
                     }
+                    user.setCollege(act_reg_college.getText().toString().trim());
+                    user.setSchool_number(et_reg_school_number.getText().toString().trim());
+                    user.setPhone(et_reg_phone.getText().toString().trim());
+                    user.setName(et_reg_name.getText().toString().trim());
+                    user.setPassword(MD5Util.encrypt(et_reg_passsword.getText().toString().trim()));
+                    user.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String objectId, BmobException e) {
+                            if (e == null) {
+                                showToast("成功注册账户" + objectId);
+                                Log("添加数据成功，返回objectId为：", objectId);
+                                // TODO: 2018/9/22    跳转页面 并保存用户信息
+                                SharePreferenceUtils.saveUser(mCtx, user);
+                                btn_regiest.setText("注册");
+                                isSubmiting_toBMob = false;
+                                //  2018/9/22   MainActivity会自行 判断是老师的主页 还是 学生的主页
+                                jumpToAnotherActivity(MainActivity.class);
+                                finish();
+                            } else {
+                                showToast("服务器繁忙，创建失败!");
+                                Log("创建数据失败：", e.getMessage());
+                                btn_regiest.setText("注册");
+                                isSubmiting_toBMob = false;
+                            }
+                        }
+                    });
+                }
                 } else {
                     showToast("服务器繁忙!");
                     Log("创建数据失败：", e.getMessage());

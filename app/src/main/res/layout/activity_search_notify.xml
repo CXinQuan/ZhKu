@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical">
 
     <LinearLayout
@@ -20,7 +21,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@mipmap/back"
-            android:transitionName="iv_head_back"/>
+            android:transitionName="iv_head_back" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -36,9 +37,9 @@
                 android:id="@+id/et_condition"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
                 android:hint="搜索历史通知"
                 android:singleLine="true"
@@ -85,12 +86,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="忽略条目" />
+                android:text="忽略" />
 
             <Spinner
                 android:id="@+id/sp_skip"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/tipspriceshape"
+                android:textAlignment="center"
+                />
         </LinearLayout>
 
 
@@ -105,13 +110,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="只查条目" />
+                android:text="最近" />
 
             <Spinner
                 android:id="@+id/sp_limit"
-
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:textAlignment="center"
+                android:background="@drawable/tipspriceshape"/>
         </LinearLayout>
 
         <LinearLayout
@@ -130,10 +137,13 @@
             <Spinner
                 android:id="@+id/sp_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                />
-            <!--android:background="#550000"-->
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:background="@drawable/tipspriceshape"
+              />
+            <!--android:background="#550000" #22000000 transparent-->
 
         </LinearLayout>
 
@@ -167,36 +177,36 @@
     </LinearLayout>
 
     <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
-        <FrameLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+        <!--android:background="@android:color/transparent"-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layoutManager="LinearLayoutManager" />
 
-            >
-            <!--android:background="@android:color/transparent"-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                app:layoutManager="LinearLayoutManager" />
+        <TextView
+            android:id="@+id/tv_not_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="找不到结果"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tv_not_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="找不到结果"
-                android:visibility="gone" />
-
-            <ProgressBar
-                android:id="@+id/pb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-        </FrameLayout>
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
     <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
 </LinearLayout>

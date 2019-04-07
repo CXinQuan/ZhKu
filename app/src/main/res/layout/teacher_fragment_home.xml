@@ -41,7 +41,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:background="@null">
             <!--android:layout_marginTop="60dp"-->
             <!--android:background="@color/colorPrimary"-->
@@ -54,9 +54,9 @@
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed" />
-
+            <!--高度为50dp-->
             <android.support.design.widget.TabLayout
                 android:id="@+id/tablayout"
                 android:layout_width="match_parent"

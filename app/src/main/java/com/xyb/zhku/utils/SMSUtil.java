@@ -34,33 +34,37 @@ public class SMSUtil {
     }
 
     /**
-     *
-     * @param i  是楼层
-     * @param str  是宿舍号
+     * @param i   是楼层
+     * @param str 是宿舍号
      * @return
      */
-    public static boolean isRightDormNmber(int i,String str){
-        if(!isDormNmber(str)){
+    public static boolean isRightDormNmber(int i, String str) {
+        if (!isDormNmber(str)) {
             return false;
-        };
+        }
+        ;
         int dormNumber = Integer.parseInt(str.trim());
-        if(dormNumber/100==i){
+        if (dormNumber / 100 == i) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     /**
-     *   将手机号码改为带 *  号的形式，手机号码加密
+     * 将手机号码改为带 *  号的形式，手机号码加密
+     *
      * @param phone
      * @return
      */
-    public static String encryptionPhone(String phone){
-        phone = phone.substring(0, 3) + "****" + phone.substring(7, 11);
+    public static String encryptionPhone(String phone) {
+        if (phone.length() < 11) {
+            phone = "点击绑定手机";
+        } else {
+            phone = phone.substring(0, 3) + "****" + phone.substring(7, 11);
+        }
         return phone;
     }
-
 
 
     /**

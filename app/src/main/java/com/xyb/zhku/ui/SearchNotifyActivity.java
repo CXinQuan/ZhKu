@@ -99,7 +99,6 @@ public class SearchNotifyActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         notifies = new ArrayList<>();
         adapter = new NotifyAdapter();
         //   Intent intent = getIntent();
@@ -144,9 +143,13 @@ public class SearchNotifyActivity extends BaseActivity {
             }
         });
 
-        UIUtils.bindSpinnerAdapter(sp_limit, limits);
-        UIUtils.bindSpinnerAdapter(sp_skip, skips);
-        UIUtils.bindSpinnerAdapter(sp_time, times);
+//        UIUtils.bindSpinnerAdapter(sp_limit, limits);
+//        UIUtils.bindSpinnerAdapter(sp_skip, skips);
+//        UIUtils.bindSpinnerAdapter(sp_time, times);
+        UIUtils.bindSpinnerBaseAdapter(SearchNotifyActivity.this,sp_limit, limits);
+        UIUtils.bindSpinnerBaseAdapter(SearchNotifyActivity.this,sp_skip, skips);
+        UIUtils.bindSpinnerBaseAdapter(SearchNotifyActivity.this,sp_time, times);
+
         // 10 、30、50、100
         sp_limit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

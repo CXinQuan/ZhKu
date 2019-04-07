@@ -13,7 +13,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.xyb.zhku.utils.NetUtils;
 import com.xyb.zhku.utils.ToastUtil;
 import com.xyb.zhku.utils.Utils;
 
@@ -28,7 +27,11 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends Activity {
     public Context mCtx = this;
 
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Looper.prepare();
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         //取消状态栏   也就是不会出现 时间+电池电量 这一栏
@@ -122,6 +125,7 @@ public abstract class BaseActivity extends Activity {
         }
     }
 
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         try {

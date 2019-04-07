@@ -55,8 +55,6 @@ public class ZhKuApplication extends Application {
                 });
             }
         });
-
-
     }
 
     /**

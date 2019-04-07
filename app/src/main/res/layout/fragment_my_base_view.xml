@@ -24,7 +24,9 @@
             android:textColor="#ffffff" />
     </LinearLayout>
 
-    <RelativeLayout style="@style/MyRelativeLayout">
+    <RelativeLayout
+        android:id="@+id/rl_bind_phone"
+        style="@style/MyRelativeLayout">
 
         <TextView
             style="@style/TextView_My_Left"
@@ -34,7 +36,7 @@
         <TextView
             android:id="@+id/tv_my_phone"
             style="@style/TextView_My_Right"
-            android:text="13533****9284" />
+            android:text="点击绑定手机" />
     </RelativeLayout>
 
     <View style="@style/View_my" />

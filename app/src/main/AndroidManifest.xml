@@ -60,7 +60,10 @@
         <activity android:name=".ui.ManagerSearchTeachingTaskActivity" />
         <activity android:name=".ui.TeachingTaskListActivity" />
         <activity android:name=".ui.TeachingTaskDetailActivity" />
-        <activity android:name=".ui.EmailChangeActivity"></activity>
+        <activity android:name=".ui.EmailChangeActivity" />
+        <activity android:name=".ui.ChangePasswordActivity"></activity>
+        <activity android:name=".ui.BindPhoneActivity"/>
+        <activity android:name=".ui.ChangePhoneActivity"/>
     </application>
 
 </manifest>

@@ -156,6 +156,7 @@ public class StuHomeworkFileActivity extends BaseActivity {
                     return;
                 }
                 break;
+            default:break;
         }
 
     }

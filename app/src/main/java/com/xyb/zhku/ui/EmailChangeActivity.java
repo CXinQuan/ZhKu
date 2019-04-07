@@ -37,9 +37,12 @@ public class EmailChangeActivity extends BaseActivity {
         initEditText();
     }
 
-    @OnClick(R.id.tv_change)
+    @OnClick({R.id.tv_change, R.id.iv_back})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.tv_change:
                 String email = etEmailChange.getText().toString().trim();
                 if ("".equals(email)) {

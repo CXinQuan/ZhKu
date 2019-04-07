@@ -54,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
 //            finish();
 //        }
         int identify = (int) SharePreferenceUtils.get(this, Constants.IDENTITY, -1);
-
-        // TODO: 2018/10/16   identify此处用于测试，该行代码需要注释掉
-        // identify = User.MANAGER_TEACHINGTASK;
-
         if (identify != User.STUDENT && identify != User.TEACHER && identify != User.MANAGER_NOTIFY && identify != User.MANAGER_TEACHINGTASK) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             Toast.makeText(this, "账号已过期，请重新登录", Toast.LENGTH_SHORT).show();
@@ -85,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     .normalIconItems(normalIcon)
                     .selectIconItems(selectIcon);
         } else if (identify == User.STUDENT) {
-            // TODO: 2018/9/30      添加学生的fragment
+            //  添加学生的fragment
             fragments.add(new StuHomeFragment());
             fragments.add(new StuHomeWorkFragment());
             fragments.add(new StuMyFragment());

@@ -1,6 +1,7 @@
 package com.xyb.zhku.factory;
 
 import com.xyb.zhku.base.BaseFragment;
+import com.xyb.zhku.fragment.manager.StuInfoInputFragement;
 import com.xyb.zhku.fragment.manager.notify.ReleaseNotifyFragment;
 import com.xyb.zhku.fragment.manager.teachingtask.ReleaseTeachingTaskFragment;
 
@@ -20,6 +21,9 @@ public class ManagerReleaseFragmentFactory {
                     break;
                 case 1:
                     fragment=new ReleaseTeachingTaskFragment();
+                    break;
+                case 2:
+                    fragment=new StuInfoInputFragement();
                     break;
             }
         }
