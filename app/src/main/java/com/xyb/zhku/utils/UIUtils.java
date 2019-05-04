@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.xyb.zhku.R;
+import com.xyb.zhku.adapter.MyArrayAdapter;
 import com.xyb.zhku.global.ZhKuApplication;
 
 import java.util.ArrayList;
@@ -87,6 +88,10 @@ public class UIUtils {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, autoString);
         autoCompleteTextView.setAdapter(adapter);     // 绑定adapter
     }
+    public static void bindAutoCompleteTextViewAdapter(AutoCompleteTextView autoCompleteTextView, MyArrayAdapter adapter) {
+        autoCompleteTextView.setAdapter(adapter);     // 绑定adapter
+    }
+
 
     /**
      * 对 AutoCompleteTextView 绑定 数据

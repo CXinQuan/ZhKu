@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.xyb.zhku.R;
+import com.xyb.zhku.adapter.MyAutoCompleteTextViewAdapter;
 import com.xyb.zhku.base.BaseFragment;
 import com.xyb.zhku.base.MyBaseAdapter;
 import com.xyb.zhku.bean.TeachingTask;
@@ -196,8 +197,18 @@ public class ReleaseTeachingTaskFragment extends BaseFragment {
         // 测试 Spinner
 
         // TODO: 2018/10/26     改变初始化代码  年级已经改为 Spinner
-       // UIUtils.bindSpinnerAdapter(Sp_enrollment_year, yearStr);
-        UIUtils.bindArray(actMajor, allMajor);
+        // UIUtils.bindSpinnerAdapter(Sp_enrollment_year, yearStr);
+        //    UIUtils.bindArray(actMajor, allMajor);
+
+        //  UIUtils.bindAutoCompleteTextViewAdapter(actMajor, new MyArrayAdapter(mCtx, allMajor));
+
+        ArrayList<String> allMajorList = new ArrayList<>();
+        for (String str : allMajor) {
+            allMajorList.add(str);
+        }
+        MyAutoCompleteTextViewAdapter autoCompleteTextViewAdapter = new MyAutoCompleteTextViewAdapter(mCtx,allMajorList);
+        actMajor.setAdapter(autoCompleteTextViewAdapter);
+
         Sp_enrollment_year.setAdapter(new MyBaseAdapter(yearStr));
 
 
@@ -283,8 +294,8 @@ public class ReleaseTeachingTaskFragment extends BaseFragment {
      */
     private void initCheckBox(final List<CheckBox> checkBoxList, final CheckBox checkBoxAll) {
         boolean isChild;// 是否是子CheckBox产生的检查
-       //子CheckBox响应全选的CheckBox时 有bug
-       // 初始化 各个 子的 ChechBox
+        //子CheckBox响应全选的CheckBox时 有bug
+        // 初始化 各个 子的 ChechBox
         for (CheckBox checkBox : checkBoxList) { //  checkBoxList_First
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -327,7 +338,7 @@ public class ReleaseTeachingTaskFragment extends BaseFragment {
         checkBoxAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    Log.d("测试","setOnClickListener被执行");
+                //    Log.d("测试","setOnClickListener被执行");
                 if (checkBoxAll.isChecked()) {
                     checkBoxAll.setChecked(true);
                     for (CheckBox checkBox : checkBoxList) {
@@ -341,7 +352,6 @@ public class ReleaseTeachingTaskFragment extends BaseFragment {
                 }
             }
         });
-
 
 
     }

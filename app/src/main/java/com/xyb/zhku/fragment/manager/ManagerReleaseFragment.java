@@ -58,7 +58,7 @@ public class ManagerReleaseFragment extends BaseFragment {
 
     }
 
-    String[] titles = new String[]{"发布通知", "录入教学任务","录入学生信息"};
+    String[] titles = new String[]{"发布通知", "教学任务","学生录入","教师录入"};
 
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -76,7 +76,7 @@ public class ManagerReleaseFragment extends BaseFragment {
             if (identify == User.MANAGER_NOTIFY) {
                 return 1;
             } else if (identify == User.MANAGER_TEACHINGTASK) {
-                return 3;
+                return 4;
             }
             return 0;
         }

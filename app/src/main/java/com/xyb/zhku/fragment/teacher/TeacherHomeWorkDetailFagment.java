@@ -1,19 +1,19 @@
 package com.xyb.zhku.fragment.teacher;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.xyb.zhku.R;
-import com.xyb.zhku.adapter.TeacherPartyBuildRecycleAdapter;
 import com.xyb.zhku.base.BaseFragment;
 import com.xyb.zhku.bean.TeacherHomeWork;
 import com.xyb.zhku.ui.EnclosureShowActivity;
-import butterknife.BindView;
 
+import butterknife.BindView;
+@SuppressLint("ValidFragment")
 public class TeacherHomeWorkDetailFagment extends BaseFragment {
     TeacherHomeWork homeWork;
 

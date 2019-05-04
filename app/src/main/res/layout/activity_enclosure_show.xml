@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.xyb.zhku.ui.EnclosureShowActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -21,13 +21,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@mipmap/back" />
 
         <TextView
             android:id="@+id/tv_head_content"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
@@ -38,7 +40,10 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toLeftOf="@+id/iv_more">
+
 
             <TextView
                 android:id="@+id/tv_download_file"
@@ -57,30 +62,55 @@
                 android:visibility="gone" />
         </FrameLayout>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/more" />
 
-    <FrameLayout
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.tencent.smtt.sdk.WebView
+            android:id="@+id/webView_tencent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <WebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <im.delight.android.webview.AdvancedWebView
+            android:id="@+id/webview2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/pb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_not_support"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
-            android:text="该文件不支持预览，建议您下载后查看" />
-    </FrameLayout>
+            android:text="该文件不支持预览，建议您下载后查看"
+            android:visibility="gone" />
+    </RelativeLayout>
 
 </LinearLayout>

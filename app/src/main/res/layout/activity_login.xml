@@ -133,9 +133,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="新用户注册"
-                android:visibility="gone"
-                android:textColor="#ffffff" />
 
+                android:textColor="#ffffff" />
+<!--     android:visibility="gone" -->
             <TextView
                 android:id="@+id/tv_forget_password"
                 android:layout_width="wrap_content"

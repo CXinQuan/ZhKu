@@ -12,14 +12,17 @@
         android:orientation="vertical">
 
         <include layout="@layout/head_view" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:id="@+id/ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_grade"
                     android:layout_width="wrap_content"
@@ -37,6 +40,7 @@
                     layout="@layout/teacher_fragment_homework_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_upload_file"
                     android:layout_width="match_parent"
@@ -65,8 +69,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
-                            android:singleLine="true"
                             android:layout_toRightOf="@+id/iv_upload"
+                            android:singleLine="true"
                             android:text="点击上传文件" />
 
                         <ImageView
@@ -83,20 +87,22 @@
                     android:id="@+id/btn_submit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="90dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="90dp"
                     android:background="@drawable/btn_logout"
                     android:text="提交作业"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
             </LinearLayout>
+
             <ProgressBar
                 android:id="@+id/pb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:visibility="gone" />
         </FrameLayout>
     </LinearLayout>
 </ScrollView>

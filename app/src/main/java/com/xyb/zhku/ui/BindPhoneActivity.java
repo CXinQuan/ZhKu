@@ -84,6 +84,7 @@ public class BindPhoneActivity extends BaseActivity {
                     time--;
                     //时间更新在页面上
                     tvGetYzm.setText("(" + time + "s)后再发");
+                    tvGetYzm.setClickable(false);
                     break;
                 case RESET_TIME:
                     //重新初始化time，等待下一次获取验证码
@@ -98,11 +99,11 @@ public class BindPhoneActivity extends BaseActivity {
                     break;
                 case SEND_CODE_FAIL:
                     showToast("验证码下发失败");
-                    tvGetYzm.setClickable(true);
+                    tvGetYzm.setClickable(false);
                     break;
                 case CHECK_CODE_SUCCESS:
                     isSubmiting_toMob = false;
-                    tvGetYzm.setClickable(true);
+                    tvGetYzm.setClickable(false);
                     if (!isSubmiting_toBMob) {    //防止多次注册
                         isSubmiting_toBMob = true;
                         addPhoneToBmob();
@@ -148,6 +149,7 @@ public class BindPhoneActivity extends BaseActivity {
                                                                     SharePreferenceUtils.saveUser(mCtx, user);
                                                                     btnSubmit.setText("提交");
                                                                     isSubmiting_toBMob = false;
+                                                                    Log("更改或绑定号码成功","更改或绑定号码成功");
                                                                     EventBus.getDefault().post(new AddOrChangePhoneEvent(user.getPhone()));
                                                                     finish();
                                                                 } else {

@@ -103,12 +103,14 @@ public class ChangePhoneActivity extends BaseActivity {
         submitCode("86", phone, etYzm.getText().toString().trim());
     }
 
+    private boolean going=false; // 表示正在跳转到更换（绑定）手机界面
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case KEEP_TIME_MIN:
                     time--;
                     tvGetYzm.setText("(" + time + "s)后再发");//时间更新在页面上
+                    tvGetYzm.setClickable(false);
                     break;
                 case RESET_TIME:
                     time = 60;  //重新初始化time，等待下一次获取验证码
@@ -122,20 +124,25 @@ public class ChangePhoneActivity extends BaseActivity {
                 case SEND_CODE_FAIL:
                     showToast("验证码下发失败");
                     isSubmiting_toMob = false;
-                    tvGetYzm.setClickable(true);
+                    tvGetYzm.setClickable(false);
                     break;
                 case CHECK_CODE_SUCCESS:
                     isSubmiting_toMob = false;
                     tvGetYzm.setClickable(true);
-                    Intent intent = new Intent(mCtx, BindPhoneActivity.class);
-                    intent.putExtra("isChangePhone", true);
-                    startActivity(intent);
-                    finish();
+                    if(!going){   // 防止多次跳转，因为在点击提交的时候，有可能点击过快，
+                                   // 可能会在Mob 后台进行验证多次，那么在瞬间会返回来多次成功，则会进行多次跳转
+                        going=true;
+                        Intent intent = new Intent(mCtx, BindPhoneActivity.class);
+                        intent.putExtra("isChangePhone", true);
+                        startActivity(intent);
+                        finish();
+                    }
+
                     break;
                 case CHECK_CODE_FAIL:
                     showToast("验证码验证失败");
                     isSubmiting_toMob = false;
-                    tvGetYzm.setClickable(true);
+                    tvGetYzm.setClickable(false);
                     break;
             }
         }

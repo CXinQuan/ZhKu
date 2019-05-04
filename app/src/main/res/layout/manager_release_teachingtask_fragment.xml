@@ -98,6 +98,7 @@
                 android:background="@null"
                 android:hint="科目 如：通信原理"
                 android:singleLine="true"
+                android:completionThreshold="1"
                 android:textColor="#999999"
                 android:textColorHint="#55666666"
                 android:textCursorDrawable="@drawable/my_cursor"
@@ -126,6 +127,7 @@
                     android:hint="专业 如：电子信息工程"
                     android:singleLine="true"
                     android:textColor="#999999"
+                    android:completionThreshold="1"
                     android:textColorHint="#55666666"
                     android:textSize="13sp" />
             </android.support.v7.widget.CardView>

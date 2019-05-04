@@ -1,5 +1,6 @@
 package com.xyb.zhku.fragment.teacher;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -54,6 +55,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+@SuppressLint("ValidFragment")
 public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
     @BindView(R.id.tv_submit_count)
     TextView tv_submit_count;
@@ -113,6 +115,9 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
     TeacherHomeWork homeWork;
     TeacherHomeWorkDetailCompletionAdapter adapter;
 
+    public TeacherHomeWorkDetailCompletionFagment() {
+    }
+
     public TeacherHomeWorkDetailCompletionFagment(TeacherHomeWork homeWork) {
         this.homeWork = homeWork;
     }
@@ -171,14 +176,13 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
      */
     private void getStudentHomeWork(final int skip) {
         BmobQuery<StudentHomeWork> query = new BmobQuery<StudentHomeWork>();
-        query.order("-updatedAt");  //  根据updatedAt 时间  从上到下  开始  返回  5条数据
+        query.order("-updatedAt");  //  根据updatedAt 时间  从上到下  开始  返回数据
         query.addWhereEqualTo("teacher_homework_id", homeWork.getObjectId());
         query.setSkip(skip);
         query.findObjects(new FindListener<StudentHomeWork>() {
             public void done(List<StudentHomeWork> object, BmobException e) {
                 if (e == null) {
                     if (object.size() <= 0) {
-                        // TODO: 2018/9/26     显示 暂时没有人提交
                         if (skip > 0) {
                             showToast("没有更多数据");
 //                            rv_all_stu.setVisibility(View.VISIBLE);
@@ -374,11 +378,11 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
      * 下载文件 或者 是 转发邮箱接收
      */
     private void downloadOrEmailReceive() {
-        if (homeWork.getStu_number_list().size() <= 0) {
+        if (lists == null || lists.size() <= 0) {
             showToast("还没学生提交呢，无法下载");
             return;
         }
-        // TODO: 2018/10/27   一键下载
+        //  一键下载
         if (state == STATEDOWNLOADFILE) {
             progressbar.setVisibility(View.VISIBLE);
             tv_one_button_download.setVisibility(View.GONE);
@@ -538,7 +542,8 @@ public class TeacherHomeWorkDetailCompletionFagment extends BaseFragment {
                                                 showToast("邮箱异常，建议重新登录");
                                                 return;
                                             }
-                                            String subject = "易仲恺学生作业接收通知";
+                                            //   String subject = "校园信息交互平台";// 学生作业接收通知
+                                            String subject = homeWork.getSubject() + "作业接收通知";
                                             SendMailUtil.send(target, toAdd, subject, target.getName());
                                         }
                                     }

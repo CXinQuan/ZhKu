@@ -4,6 +4,7 @@ import com.xyb.zhku.base.BaseFragment;
 import com.xyb.zhku.fragment.manager.StuInfoInputFragement;
 import com.xyb.zhku.fragment.manager.notify.ReleaseNotifyFragment;
 import com.xyb.zhku.fragment.manager.teachingtask.ReleaseTeachingTaskFragment;
+import com.xyb.zhku.fragment.manager.teachingtask.TeacherInfoInputFragment;
 
 import java.util.HashMap;
 
@@ -24,6 +25,9 @@ public class ManagerReleaseFragmentFactory {
                     break;
                 case 2:
                     fragment=new StuInfoInputFragement();
+                    break;
+                case 3:
+                    fragment=new TeacherInfoInputFragment();
                     break;
             }
         }

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.xyb.zhku.R;
 import com.xyb.zhku.base.BaseActivity;
+import com.xyb.zhku.base.MyBaseAdapter;
 import com.xyb.zhku.bean.TeacherHomeWork;
 import com.xyb.zhku.bean.TeachingTask;
 import com.xyb.zhku.global.Constants;
@@ -123,7 +124,9 @@ public class ReleaseHomeworkActivity extends BaseActivity {
                         for (TeachingTask.SubjectClass subjectClass : taskList) {
                             subjectList.add(subjectClass.getSubject());
                         }
-                        UIUtils.bindSpinnerAdapter(Sp_subject, subjectList);
+                     //   UIUtils.bindSpinnerAdapter(Sp_subject, subjectList);
+                        Sp_subject.setAdapter(new MyBaseAdapter(subjectList));
+
                     } else {
                         showView(TEXTVIEW);
                         tv_not_teaching_task.setText("您还没有教学任务");

@@ -1,12 +1,6 @@
 package com.xyb.zhku.factory;
 
-import android.app.Fragment;
-
 import com.xyb.zhku.base.BaseFragment;
-import com.xyb.zhku.fragment.teacher.TeacherOtherFragment;
-import com.xyb.zhku.fragment.teacher.TeacherPartyBuildFragment;
-import com.xyb.zhku.fragment.teacher.TeacherScienceFragment;
-import com.xyb.zhku.fragment.teacher.TeacherTeachingFragment;
 import com.xyb.zhku.fragment.teacher.notify.OtherFragment;
 import com.xyb.zhku.fragment.teacher.notify.PartyBuildFragment;
 import com.xyb.zhku.fragment.teacher.notify.ScienceFragment;

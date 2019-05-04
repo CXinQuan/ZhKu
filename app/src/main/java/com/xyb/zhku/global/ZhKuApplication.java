@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.util.Log;
 import com.mob.MobSDK;
+import com.tencent.smtt.sdk.QbSdk;
 import com.xyb.zhku.bean.ErrorInfo;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.exception.BmobException;
@@ -27,7 +28,8 @@ public class ZhKuApplication extends Application {
         super.onCreate();
         Bmob.initialize(this, "33ca9c317f08d78c3c0e50724bede9ad");
         MobSDK.init(this);
-        mainThreadId = android.os.Process.myTid();
+        QbSdk.initX5Environment(this,null);
+                mainThreadId = android.os.Process.myTid();
         context = getApplicationContext();
         handler = new Handler();
 

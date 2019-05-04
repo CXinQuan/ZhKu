@@ -88,7 +88,6 @@ public class StuInfoInputFragement extends BaseFragment {
                 handler.removeMessages(SUCCESS);
                 user.setSchool_number(year + userMajor.getNumber() + userClass + String.format("%02d", i));
                 user.setName("学生" + String.format("%02d", i));
-
                 BmobQuery<User> bmobQuery = new BmobQuery<User>();
                 bmobQuery.addWhereEqualTo("school_number", user.getSchool_number())
                         .findObjects(new FindListener<User>() {

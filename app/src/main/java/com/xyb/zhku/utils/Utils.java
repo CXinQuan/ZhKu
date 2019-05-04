@@ -35,7 +35,7 @@ public class Utils {
     }
 
     /**
-     * 判断是否是学号
+     * 判断是否是教师工号
      */
     public static boolean isTeacherNumber(String str) {
 

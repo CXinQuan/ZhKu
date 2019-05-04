@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="50dp">
+
+    <LinearLayout style="@style/Reg_LinearLayout">
+
+        <TextView
+            android:id="@+id/tv_reg_school_number"
+            style="@style/Reg_TextView"
+            android:text="工号" />
+
+        <EditText
+            android:id="@+id/et_teach_school_number"
+            style="@style/Reg_AutoCompleteTextView"
+            android:hint="请输入工号" />
+    </LinearLayout>
+
+
+    <LinearLayout style="@style/Reg_LinearLayout">
+
+        <TextView
+            style="@style/Reg_TextView"
+            android:text="姓名" />
+
+        <EditText
+            android:id="@+id/et_teach_name"
+            style="@style/Reg_AutoCompleteTextView"
+            android:hint="请输入姓名 如 张三" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_email"
+        style="@style/Reg_LinearLayout">
+
+        <TextView
+            android:id="@+id/tv_reg_email"
+            style="@style/Reg_TextView"
+            android:text="邮箱" />
+
+        <EditText
+            android:id="@+id/et_teach_email"
+            style="@style/Reg_AutoCompleteTextView"
+            android:hint="请输入邮箱" />
+    </LinearLayout>
+
+    <!--<LinearLayout style="@style/Reg_LinearLayout">
+
+        <TextView
+            style="@style/Reg_TextView"
+            android:text="手机" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            style="@style/Reg_AutoCompleteTextView"
+            android:hint="请输入手机号码" />
+    </LinearLayout>-->
+    <LinearLayout style="@style/Reg_LinearLayout">
+
+        <TextView
+            style="@style/Reg_TextView"
+            android:text="学院" />
+
+        <Spinner
+            android:id="@+id/sp_teach_college"
+            style="@style/Reg_AutoCompleteTextView"
+            android:hint="请输入手机号码"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/corn_bg"
+        android:text="确认录入"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+</LinearLayout>
